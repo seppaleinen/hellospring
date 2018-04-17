@@ -1,0 +1,6 @@
+rootProject.name = 'root'
+
+include 'hellopitestbdd'
+include 'hellospringboot2'
+include 'hellospringcucumber'
+include 'hellospringkafka'
