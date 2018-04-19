@@ -1,4 +1,4 @@
-rootProject.name = 'root'
+rootProject.name = 'hellospring'
 
 include 'hellopitestbdd'
 include 'hellospringboot2'
