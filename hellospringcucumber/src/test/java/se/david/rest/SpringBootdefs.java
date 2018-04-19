@@ -9,8 +9,8 @@ import io.restassured.http.ContentType;
 import io.restassured.http.Method;
 import io.restassured.response.ValidatableResponse;
 import org.hamcrest.CoreMatchers;
-import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ContextConfiguration;
 
 import static io.restassured.RestAssured.given;

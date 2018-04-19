@@ -29,9 +29,9 @@ import static org.mockito.Mockito.verify;
         classes = Application.class,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
-@DirtiesContext
 @ActiveProfiles("test")
 @EmbeddedKafka(topics = "receiver.t", controlledShutdown = true, count = 1)
+@DirtiesContext
 public class IntegrationTest {
     @LocalServerPort
     private int port;
