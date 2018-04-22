@@ -7,6 +7,8 @@ import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootContextLoader;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -19,13 +21,12 @@ import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(
-        loader = SpringBootContextLoader.class,
-        classes = BootApplication.class
-)
-@WebAppConfiguration
+@SpringBootTest(classes = BootApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ContextConfiguration(loader = SpringBootContextLoader.class)
 @Ignore
 public class SpringBootdefs {
+    @LocalServerPort
+    private int port;
     @Autowired
     private WebApplicationContext context;
     private MockMvc mvc;
