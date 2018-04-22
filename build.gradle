@@ -1,0 +1,12 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.3.0'
+    }
+}
+
+subprojects {
+    apply plugin: 'info.solidsoft.pitest'
+}
