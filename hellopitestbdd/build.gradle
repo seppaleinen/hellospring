@@ -5,7 +5,7 @@ buildscript {
     configurations.maybeCreate("pitest")
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE")
-        classpath "info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.11"
+        classpath "info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.2.4"
         pitest("com.github.alexvictoor:pitest-cucumber-plugin:0.4")
     }
 }
@@ -43,7 +43,7 @@ dependencies {
     testCompile("org.springframework.boot:spring-boot-test")
     testCompile("org.pitest:pitest:1.2.0")
     testCompile("junit:junit")
-    testCompile 'info.cukes:cucumber-java:1.2.2'
-    testCompile 'info.cukes:cucumber-junit:1.2.2'
-    testCompile 'info.cukes:cucumber-spring:1.2.2'
+    testCompile 'info.cukes:cucumber-java:1.2.5'
+    testCompile 'info.cukes:cucumber-junit:1.2.5'
+    testCompile 'info.cukes:cucumber-spring:1.2.5'
 }
