@@ -1,4 +1,4 @@
-package se.david;
+package se.david.pitest;
 
 import java.util.Date;
 

@@ -29,7 +29,9 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 pitest {
-    targetClasses = ['se.david.*']  //by default "${project.group}.*"
+    verbose = true
+    targetClasses = ['se.david.pitest.*']  //by default "${project.group}.*"
+    targetTests = ['se.david.pitest.*']  //by default "${project.group}.*"
     outputFormats = ['XML', 'HTML']
 }
 
