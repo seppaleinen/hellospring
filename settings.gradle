@@ -1,5 +1,6 @@
 rootProject.name = 'hellospring'
 
+include 'hellocloudtask'
 include 'hellopitestbdd'
 include 'hellospringboot2'
 include 'hellospringcucumber'
