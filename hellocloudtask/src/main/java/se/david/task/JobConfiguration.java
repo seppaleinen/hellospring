@@ -35,10 +35,7 @@ public class JobConfiguration {
         return this.stepBuilderFactory.get("job1step1")
                 .tasklet(new Tasklet() {
                     @Override
-                    public RepeatStatus execute(
-                            StepContribution contribution,
-                            ChunkContext chunkContext)
-                            throws Exception {
+                    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
                         LOGGER.info("Tasklet has run");
                         return RepeatStatus.FINISHED;
                     }
@@ -49,25 +46,19 @@ public class JobConfiguration {
     public Step step2() {
         return this.stepBuilderFactory
                 .get("job1step2")
-                .<String, String> chunk(3)
-                .reader(
-                        new ListItemReader<>(Arrays.asList("7",
-                                "2", "3", "10", "5", "6")))
-                .processor(
-                        new ItemProcessor<String, String>() {
-                            @Override
-                            public String process(String item)
-                                    throws Exception {
-                                LOGGER.info("Processing of chunks");
-                                return String.valueOf(Integer
-                                        .parseInt(item) * -1);
-                            }
-                        })
+                .<String, String>chunk(3)
+                .reader(new ListItemReader<>(Arrays.asList("7", "2", "3", "10", "5", "6")))
+                .processor(new ItemProcessor<String, String>() {
+                    @Override
+                    public String process(String item) {
+                        LOGGER.info("Processing of chunks");
+                        return String.valueOf(Integer.parseInt(item) * -1);
+                    }
+                })
                 .writer(new ItemWriter<String>() {
                     @Override
                     public void write(
-                            List<? extends String> items)
-                            throws Exception {
+                            List<? extends String> items) {
                         for (String item : items) {
                             LOGGER.info(">> " + item);
                         }
@@ -91,8 +82,7 @@ public class JobConfiguration {
                             @Override
                             public RepeatStatus execute(
                                     StepContribution contribution,
-                                    ChunkContext chunkContext)
-                                    throws Exception {
+                                    ChunkContext chunkContext) {
                                 LOGGER.info("This job is from Baeldung");
                                 return RepeatStatus.FINISHED;
                             }
