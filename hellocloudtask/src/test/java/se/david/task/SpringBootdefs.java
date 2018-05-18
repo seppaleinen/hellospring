@@ -9,9 +9,13 @@ import io.restassured.http.ContentType;
 import io.restassured.http.Method;
 import io.restassured.response.ValidatableResponse;
 import org.hamcrest.CoreMatchers;
+import org.junit.Ignore;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static io.restassured.RestAssured.given;
 
@@ -19,7 +23,7 @@ import static io.restassured.RestAssured.given;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = Application.class
 )
-@ContextConfiguration
+@ContextConfiguration(loader = SpringBootContextLoader.class)
 public class SpringBootdefs {
     @LocalServerPort
     private int port;
