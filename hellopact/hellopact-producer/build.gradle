@@ -36,5 +36,4 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('io.rest-assured:rest-assured:3.0.5')
     testCompile('junit:junit:4.12')
-    testCompile('org.springframework.cloud:spring-cloud-contract-wiremock:1.2.1.RELEASE')
 }

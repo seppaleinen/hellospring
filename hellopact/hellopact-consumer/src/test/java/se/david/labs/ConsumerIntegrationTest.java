@@ -32,7 +32,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(loader = SpringBootContextLoader.class)
 @AutoConfigureWireMock(port = 8082)
-public class BestSpringTest {
+public class ConsumerIntegrationTest {
     @LocalServerPort
     private int port;
 
