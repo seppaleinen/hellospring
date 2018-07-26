@@ -1,16 +1,21 @@
 package se.david.labs;
 
-import com.github.tomakehurst.wiremock.client.WireMock;
+import au.com.dius.pact.consumer.Pact;
+import au.com.dius.pact.consumer.PactProviderRuleMk2;
+import au.com.dius.pact.consumer.PactVerification;
+import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
+import au.com.dius.pact.model.RequestResponsePact;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,34 +28,44 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(loader = SpringBootContextLoader.class)
-@AutoConfigureWireMock(port = 8082)
 public class ConsumerIntegrationTest {
     @LocalServerPort
     private int port;
 
+    @Rule
+    public PactProviderRuleMk2 stubProvider =
+            new PactProviderRuleMk2("hellopact-producer", "localhost", 8082, this);
+
     @Before
     public void beforeAll() {
         RestAssured.port = port;
-        WireMock.reset();
+    }
+
+    @Pact(state = "a collection of 2 addresses",
+            provider = "hellopact-producer",
+            consumer = "hellopact-consumer")
+    public RequestResponsePact createAddressCollectionResourcePact(PactDslWithProvider builder) {
+        return builder
+                .given("a collection of 2 addresses")
+                .uponReceiving("a request to the address collection resource")
+                .path("/producer")
+                .method(HttpMethod.POST.name())
+                .willRespondWith()
+                .status(HttpStatus.OK.value())
+                .body(readFile("response.json"), MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .toPact();
     }
 
     @Test
+    @PactVerification(fragment = "createAddressCollectionResourcePact")
     public void testConsumeEndpoint() {
-        String responseBody = readFile("response.json");
-        stubFor(WireMock.post(WireMock.urlEqualTo("/producer")).willReturn(
-                aResponse()
-                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                        .withBody(responseBody))
-        );
-        JsonPath expectedJson = new JsonPath(responseBody);
+        JsonPath expectedJson = new JsonPath(readFile("response.json"));
 
         given()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -62,6 +77,7 @@ public class ConsumerIntegrationTest {
                 .statusCode(HttpStatus.OK.value())
                 .body("", equalTo(expectedJson.getMap("")));
     }
+
 
     private String readFile(String filename) {
         try (

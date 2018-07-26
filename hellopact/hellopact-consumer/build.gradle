@@ -37,4 +37,5 @@ dependencies {
     testCompile('io.rest-assured:rest-assured:3.0.5')
     testCompile('junit:junit:4.12')
     testCompile('org.springframework.cloud:spring-cloud-contract-wiremock:1.2.1.RELEASE')
+    testCompile('au.com.dius:pact-jvm-consumer-junit_2.12:3.5.19')
 }
