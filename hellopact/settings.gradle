@@ -1,0 +1,3 @@
+rootProject.name = 'hellopact'
+
+include 'hellopact-consumer'
