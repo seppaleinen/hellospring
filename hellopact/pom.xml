@@ -4,15 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>se.david</groupId>
-    <artifactId>root</artifactId>
+    <artifactId>hellopact</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>hellopitestbdd</module>
-        <module>hellospringboot2</module>
-        <module>hellospringcucumber</module>
-        <module>hellospringkafka</module>        
-        <module>hellopact</module>
+        <module>hellopact-consumer</module>
+        <module>hellopact-producer</module>
     </modules>
 </project>
