@@ -1,4 +1,4 @@
-package se.david.labs;
+package se.david.labs.producer;
 
 import au.com.dius.pact.provider.junit.PactRunner;
 import au.com.dius.pact.provider.junit.Provider;
@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
+import se.david.labs.producer.Application;
 
 @RunWith(PactRunner.class)
 @Provider("hellopact-producer")

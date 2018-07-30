@@ -37,5 +37,4 @@ dependencies {
     testCompile('io.rest-assured:rest-assured:3.0.5')
     testCompile('junit:junit:4.12')
     testCompile('au.com.dius:pact-jvm-provider-junit_2.12:3.5.19')
-
 }

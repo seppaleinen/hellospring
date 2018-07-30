@@ -1,4 +1,4 @@
-package se.david.labs;
+package se.david.labs.consumer;
 
 import au.com.dius.pact.consumer.Pact;
 import au.com.dius.pact.consumer.PactProviderRuleMk2;
@@ -54,6 +54,9 @@ public class ConsumerIntegrationTest {
         return builder
                 .given("a collection of 2 addresses")
                 .uponReceiving("a request to the address collection resource")
+                .headers(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .headers(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(readFile("request.json"))
                 .path("/producer")
                 .method(HttpMethod.POST.name())
                 .willRespondWith()

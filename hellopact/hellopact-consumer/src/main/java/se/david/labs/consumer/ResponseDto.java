@@ -1,4 +1,4 @@
-package se.david.labs;
+package se.david.labs.consumer;
 
 public class ResponseDto {
     private String data;

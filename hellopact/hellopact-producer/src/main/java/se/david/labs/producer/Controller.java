@@ -1,4 +1,4 @@
-package se.david.labs;
+package se.david.labs.producer;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

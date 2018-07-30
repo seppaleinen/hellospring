@@ -1,4 +1,4 @@
-package se.david.labs;
+package se.david.labs.producer;
 
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;

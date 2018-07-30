@@ -1,4 +1,4 @@
-package se.david.labs;
+package se.david.labs.consumer;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -33,7 +33,7 @@ class Controller {
     private HttpHeaders createHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
-        headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_XML_VALUE);
+        headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE);
         return headers;
     }
 

@@ -1,4 +1,4 @@
-package se.david.labs;
+package se.david.labs.consumer;
 
 public class RequestDto {
     private String data;
