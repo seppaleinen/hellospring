@@ -11,6 +11,9 @@ targetCompatibility = 1.8
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 buildscript {
+    ext {
+        pactVersion = "3.5.19"
+    }
     repositories {
         mavenCentral()
     }
@@ -31,5 +34,6 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('io.rest-assured:rest-assured:3.0.5')
     testCompile('junit:junit:4.12')
-    testCompile('au.com.dius:pact-jvm-provider-junit_2.12:3.5.19')
+    testCompile("au.com.dius:pact-jvm-provider-junit_2.12:${pactVersion}")
+    testCompile("au.com.dius:pact-jvm-provider-spring_2.11:${pactVersion}")
 }

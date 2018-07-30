@@ -9,3 +9,9 @@
 * https://github.com/DiUS/pact-jvm/tree/master/pact-jvm-provider-gradle#publishing-pact-files-to-a-pact-broker
 * https://github.com/DiUS/pact-jvm/tree/master/pact-jvm-consumer-junit
 * https://github.com/DiUS/pact-jvm/tree/master/pact-jvm-provider-junit
+
+
+```bash
+gradle pactVerify
+gradle pactPublish
+```

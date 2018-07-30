@@ -27,6 +27,11 @@ buildscript {
 
 pact {
 
+    publish {
+        pactDirectory = 'target/pacts' // defaults to $buildDir/pacts
+        pactBrokerUrl = 'http://localhost:8099'
+    }
+
     serviceProviders {
 
         hellopactProvider {

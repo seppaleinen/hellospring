@@ -4,7 +4,7 @@ services:
     container_name: pact-broker
     image: dius/pact-broker
     ports:
-      - "80:80"
+      - "8099:80"
     links:
       - postgres
     environment:
@@ -22,14 +22,3 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: postgres
-
-  nginx:
-    container_name: nginx
-    image: nginx:alpine
-    links:
-      - broker_app:broker
-#    volumes:
-#    - ./ssl/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-#    - ./ssl:/etc/nginx/ssl
-    ports:
-    - "8443:443"

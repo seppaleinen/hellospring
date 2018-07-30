@@ -1,30 +1,87 @@
 package se.david.labs.producer;
 
-import au.com.dius.pact.provider.junit.PactRunner;
 import au.com.dius.pact.provider.junit.Provider;
+import au.com.dius.pact.provider.junit.State;
 import au.com.dius.pact.provider.junit.loader.PactBroker;
 import au.com.dius.pact.provider.junit.target.HttpTarget;
 import au.com.dius.pact.provider.junit.target.Target;
 import au.com.dius.pact.provider.junit.target.TestTarget;
+import au.com.dius.pact.provider.spring.SpringRestPactRunner;
+import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import se.david.labs.producer.Application;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
-@RunWith(PactRunner.class)
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.equalTo;
+
+@RunWith(SpringRestPactRunner.class)
+@SpringBootTest(classes=Application.class,webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @Provider("hellopact-producer")
-@PactBroker(host = "${pactbroker.hostname:localhost}", port = "${pactbroker.port:80}")
-@SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(loader = SpringBootContextLoader.class)
+@PactBroker(host = "${pactbroker.hostname:localhost}", port = "${pactbroker.port:8099}")
 public class PactTest {
-//    @ClassRule
-//    public static SpringBootStarter appStarter = SpringBootStarter.builder()
-//            .withApplicationClass(DemoApplication.class)
-//            .withArgument("--spring.config.location=classpath:/application-pact.properties")
-//            .withDatabaseState("address-collection", "/initial-schema.sql", "/address-collection.sql")
-//            .build();
+    @LocalServerPort
+    private int port;
 
-    @TestTarget // Annotation denotes Target that will be used for tests
-    public final Target target = new HttpTarget(8082); // Out-of-the-box implementation of Target (for more information take a look at Test Target section)
+    @TestTarget
+    public final Target target = new HttpTarget(8082);
+
+    @Before
+    public void before() {
+        RestAssured.port = 8082;
+    }
+
+    @State(value="a collection of 2 addresses")
+    public void createInventoryState() {
+        JsonPath expectedJson = new JsonPath(readFile("response.json"));
+
+        given().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(readFile("request.json"))
+                .when()
+                .post("/producer")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("", equalTo(expectedJson.getMap("")));
+    }
+
+    @Test
+    public void testProducerEndpoint() {
+        JsonPath expectedJson = new JsonPath(readFile("response.json"));
+
+        given()
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(readFile("request.json"))
+                .when()
+                .post("/producer")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("", equalTo(expectedJson.getMap("")));
+    }
+
+
+    private String readFile(String filename) {
+        try (
+                InputStream resource = getClass().getClassLoader().getResourceAsStream(filename);
+                InputStreamReader isr = new InputStreamReader(resource, StandardCharsets.UTF_8);
+                BufferedReader bf = new BufferedReader(isr)) {
+            return bf.lines().collect(Collectors.joining("\n"));
+        } catch (IOException e) {
+            throw new IllegalStateException("Couldn't read from file: " + filename);
+        }
+    }
 }
