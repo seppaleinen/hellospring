@@ -73,7 +73,6 @@ public class PactTest {
                 .body("", equalTo(expectedJson.getMap("")));
     }
 
-
     private String readFile(String filename) {
         try (
                 InputStream resource = getClass().getClassLoader().getResourceAsStream(filename);

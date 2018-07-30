@@ -18,6 +18,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -33,6 +34,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 @ContextConfiguration(loader = SpringBootContextLoader.class)
 public class ConsumerIntegrationTest {
     @LocalServerPort
@@ -40,16 +42,14 @@ public class ConsumerIntegrationTest {
 
     @Rule
     public PactProviderRuleMk2 stubProvider =
-            new PactProviderRuleMk2("hellopact-producer", "localhost", 8082, this);
+            new PactProviderRuleMk2("hellopact-producer", "localhost", 9999, this);
 
     @Before
     public void beforeAll() {
         RestAssured.port = port;
     }
 
-    @Pact(state = "a collection of 2 addresses",
-            provider = "hellopact-producer",
-            consumer = "hellopact-consumer")
+    @Pact(provider = "hellopact-producer", consumer = "hellopact-consumer")
     public RequestResponsePact createAddressCollectionResourcePact(PactDslWithProvider builder) {
         return builder
                 .given("a collection of 2 addresses")
