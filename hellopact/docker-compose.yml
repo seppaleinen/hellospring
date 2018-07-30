@@ -1,21 +1,5 @@
 version: '2'
 services:
-  consumer:
-    container_name: consumer
-    build: hellopact-consumer
-    image: seppaleinen/hellopact-consumer
-    links:
-      - producer:producer
-    ports:
-      - "8080:8080"
-
-  producer:
-    container_name: producer
-    build: hellopact-producer
-    image: seppaleinen/hellopact-producer
-    ports:
-      - "8082:8082"
-
   broker_app:
     container_name: pact-broker
     image: dius/pact-broker
