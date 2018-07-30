@@ -8,20 +8,15 @@ version = '0.0.1-SNAPSHOT'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-tasks.withType(JavaCompile) {
-	options.encoding = 'UTF-8'
-}
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 buildscript {
-    ext{
-       springBootVersion = '2.0.0.RELEASE'
-    }
     repositories {
         mavenCentral()
     }
 
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE')
     }
 }
 

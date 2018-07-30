@@ -9,21 +9,19 @@ version = '0.0.1-SNAPSHOT'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-tasks.withType(JavaCompile) {
-	options.encoding = 'UTF-8'
-}
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 buildscript {
-    ext{
-       springBootVersion = '2.0.0.RELEASE'
+    ext {
+        pactVersion = '3.5.19'
     }
     repositories {
         mavenCentral()
     }
 
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath 'au.com.dius:pact-jvm-provider-gradle_2.12:3.5.19'
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE')
+        classpath("au.com.dius:pact-jvm-provider-gradle_2.12:${pactVersion}")
     }
 }
 
@@ -59,5 +57,5 @@ dependencies {
     testCompile('io.rest-assured:rest-assured:3.0.5')
     testCompile('junit:junit:4.12')
     testCompile('org.springframework.cloud:spring-cloud-contract-wiremock:1.2.1.RELEASE')
-    testCompile('au.com.dius:pact-jvm-consumer-junit_2.12:3.5.19')
+    testCompile("au.com.dius:pact-jvm-consumer-junit_2.12:${pactVersion}")
 }
