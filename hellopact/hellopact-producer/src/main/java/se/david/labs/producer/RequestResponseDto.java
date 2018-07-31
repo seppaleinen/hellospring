@@ -1,11 +1,11 @@
-package se.david.labs.consumer;
+package se.david.labs.producer;
 
-public class ResponseDto {
+public class RequestResponseDto {
     private String data;
 
-    public ResponseDto() {}
+    public RequestResponseDto() {}
 
-    public ResponseDto(String data) {
+    public RequestResponseDto(String data) {
         this.data = data;
     }
 
@@ -22,7 +22,7 @@ public class ResponseDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ResponseDto that = (ResponseDto) o;
+        RequestResponseDto that = (RequestResponseDto) o;
 
         return data != null ? data.equals(that.data) : that.data == null;
     }

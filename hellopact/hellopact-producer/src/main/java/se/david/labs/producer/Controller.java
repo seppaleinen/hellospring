@@ -13,7 +13,7 @@ class Controller {
             value = "/producer",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    ResponseEntity<ResponseDto> call(@RequestBody RequestDto request) {
-        return ResponseEntity.ok(new ResponseDto(request.getData()));
+    ResponseEntity<RequestResponseDto> call(@RequestBody RequestResponseDto request) {
+        return ResponseEntity.ok(new RequestResponseDto(request.getData()));
     }
 }

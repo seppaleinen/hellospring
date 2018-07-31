@@ -24,9 +24,13 @@ class Controller {
             value = "/consume",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    ResponseEntity<ResponseDto> call(@RequestBody RequestDto request) {
-        HttpEntity<RequestDto> httpEntity = new HttpEntity<>(request, createHeaders());
-        ResponseEntity<ResponseDto> response = REST_TEMPLATE.postForEntity(producerEndpoint, httpEntity, ResponseDto.class);
+    ResponseEntity<RequestResponseDto> call(@RequestBody RequestResponseDto request) {
+        HttpEntity<RequestResponseDto> httpEntity = new HttpEntity<>(request, createHeaders());
+        ResponseEntity<RequestResponseDto> response = REST_TEMPLATE.postForEntity(
+                producerEndpoint, httpEntity, RequestResponseDto.class);
+        if (response.getBody() == null) {
+            throw new IllegalStateException("No body returned from producer");
+        }
         return ResponseEntity.ok(response.getBody());
     }
 
@@ -36,5 +40,4 @@ class Controller {
         headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE);
         return headers;
     }
-
 }

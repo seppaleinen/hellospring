@@ -22,13 +22,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.stream.Collectors;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 
@@ -37,6 +30,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 @ActiveProfiles("test")
 @ContextConfiguration(loader = SpringBootContextLoader.class)
 public class ConsumerIntegrationTest {
+    private static final String IO_DATA = "{\"data\":\"hello\"}";
     @LocalServerPort
     private int port;
 
@@ -50,46 +44,34 @@ public class ConsumerIntegrationTest {
     }
 
     @Pact(provider = "hellopact-producer", consumer = "hellopact-consumer")
-    public RequestResponsePact createAddressCollectionResourcePact(PactDslWithProvider builder) {
+    public RequestResponsePact simpleCallToProducer(PactDslWithProvider builder) {
         return builder
-                .given("a collection of 2 addresses")
-                .uponReceiving("a request to the address collection resource")
+                .given("simple call to producer")
+                .uponReceiving("A request to producer endpoint")
                 .headers(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .headers(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .body(readFile("request.json"))
+                .body(IO_DATA)
                 .path("/producer")
                 .method(HttpMethod.POST.name())
                 .willRespondWith()
                 .status(HttpStatus.OK.value())
-                .body(readFile("response.json"), MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .body(IO_DATA, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .toPact();
     }
 
     @Test
-    @PactVerification(fragment = "createAddressCollectionResourcePact")
+    @PactVerification(fragment = "simpleCallToProducer")
     public void testConsumeEndpoint() {
-        JsonPath expectedJson = new JsonPath(readFile("response.json"));
+        JsonPath expectedJson = new JsonPath(IO_DATA);
 
         given()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .body(readFile("request.json"))
+                .body(IO_DATA)
                 .when()
                 .post("/consume")
                 .then()
                 .statusCode(HttpStatus.OK.value())
-                .body("", equalTo(expectedJson.getMap("")));
-    }
-
-
-    private String readFile(String filename) {
-        try (
-                InputStream resource = getClass().getClassLoader().getResourceAsStream(filename);
-                InputStreamReader isr = new InputStreamReader(resource, StandardCharsets.UTF_8);
-                BufferedReader bf = new BufferedReader(isr)) {
-            return bf.lines().collect(Collectors.joining("\n"));
-        } catch (IOException e) {
-            throw new IllegalStateException("Couldn't read from file: " + filename);
-        }
+                .body("", equalTo(expectedJson.getMap(""))); // This is to easier validate json response
     }
 }

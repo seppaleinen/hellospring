@@ -1,12 +1,13 @@
 package se.david.labs.producer;
 
+import au.com.dius.pact.provider.junit.IgnoreNoPactsToVerify;
 import au.com.dius.pact.provider.junit.Provider;
 import au.com.dius.pact.provider.junit.State;
 import au.com.dius.pact.provider.junit.loader.PactBroker;
-import au.com.dius.pact.provider.junit.target.HttpTarget;
 import au.com.dius.pact.provider.junit.target.Target;
 import au.com.dius.pact.provider.junit.target.TestTarget;
 import au.com.dius.pact.provider.spring.SpringRestPactRunner;
+import au.com.dius.pact.provider.spring.target.SpringBootHttpTarget;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import org.junit.Before;
@@ -18,69 +19,57 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.stream.Collectors;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 @RunWith(SpringRestPactRunner.class)
-@SpringBootTest(classes=Application.class,webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Provider("hellopact-producer")
 @PactBroker(host = "${pactbroker.hostname:localhost}", port = "${pactbroker.port:8099}")
+@IgnoreNoPactsToVerify
 public class PactTest {
+    private static final String IO_DATA = "{\"data\":\"hello\"}";
+
     @LocalServerPort
     private int port;
 
     @TestTarget
-    public final Target target = new HttpTarget(8082);
+    public final Target target = new SpringBootHttpTarget();
 
     @Before
     public void before() {
-        RestAssured.port = 8082;
+        RestAssured.port = port;
     }
 
-    @State(value="a collection of 2 addresses")
-    public void createInventoryState() {
-        JsonPath expectedJson = new JsonPath(readFile("response.json"));
+    @State(value = "simple call to producer")
+    public void simpleCallToProducer() {
+        JsonPath expectedJson = new JsonPath(IO_DATA);
 
         given().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .body(readFile("request.json"))
+                .body(IO_DATA)
                 .when()
                 .post("/producer")
                 .then()
                 .statusCode(HttpStatus.OK.value())
-                .body("", equalTo(expectedJson.getMap("")));
+                .body("", equalTo(expectedJson.getMap(""))); // This is to easier validate json response
     }
 
+    // Is ignored somehow
     @Test
     public void testProducerEndpoint() {
-        JsonPath expectedJson = new JsonPath(readFile("response.json"));
+        JsonPath expectedJson = new JsonPath(IO_DATA);
 
         given()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .body(readFile("request.json"))
+                .body(IO_DATA)
                 .when()
                 .post("/producer")
                 .then()
                 .statusCode(HttpStatus.OK.value())
-                .body("", equalTo(expectedJson.getMap("")));
-    }
-
-    private String readFile(String filename) {
-        try (
-                InputStream resource = getClass().getClassLoader().getResourceAsStream(filename);
-                InputStreamReader isr = new InputStreamReader(resource, StandardCharsets.UTF_8);
-                BufferedReader bf = new BufferedReader(isr)) {
-            return bf.lines().collect(Collectors.joining("\n"));
-        } catch (IOException e) {
-            throw new IllegalStateException("Couldn't read from file: " + filename);
-        }
+                .body("", equalTo(expectedJson.getMap(""))); // This is to easier validate json response
     }
 }
+
+
