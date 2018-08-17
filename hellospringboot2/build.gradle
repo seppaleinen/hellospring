@@ -36,7 +36,6 @@ dependencies {
     compile('com.h2database:h2')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile('io.rest-assured:rest-assured:3.0.5')
 
     testImplementation('org.junit.jupiter:junit-jupiter-api')
     testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine')
