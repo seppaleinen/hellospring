@@ -4,6 +4,7 @@ import io.restassured.RestAssured;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,9 +36,9 @@ import static org.mockito.Mockito.verify;
 public class IntegrationTest {
     @LocalServerPort
     private int port;
-    @SpyBean
+    @Autowired
     private Sender sender;
-    @SpyBean
+    @Autowired
     private Receiver receiver;
     @Value("${topic.receiver}")
     private String topic;
@@ -53,8 +54,6 @@ public class IntegrationTest {
                 when().get("/kafka/message")
                 .then()
                 .statusCode(HttpStatus.OK.value());
-
-        verify(sender).send(topic, "message");
 
         await().atMost(500, TimeUnit.MILLISECONDS)
                 .until(receiver::getReceivedMessage, is("message"));
