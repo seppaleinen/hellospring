@@ -28,12 +28,6 @@ repositories {
     mavenCentral()
 }
 
-test {
-    testLogging {
-        showStandardStreams = true
-    }
-}
-
 dependencies {
     compile('org.springframework.boot:spring-boot-starter')
     compile('org.springframework.boot:spring-boot-starter-web')
