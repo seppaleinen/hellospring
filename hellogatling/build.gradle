@@ -1,0 +1,65 @@
+group = 'se.david'
+version = '0.0.1-SNAPSHOT'
+
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+
+    dependencies {
+        classpath(
+                'org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE',
+                'gradle.plugin.com.github.lkishalmi.gatling:gradle-gatling-plugin:0.7.3',
+                'gradle.plugin.com.github.psxpaul:gradle-execfork-plugin:0.1.8'
+        )
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'com.github.lkishalmi.gatling'
+apply plugin: 'gradle-execfork-plugin'
+
+ext['netty.version'] = '4.0.51.Final' // Forcing spring-boots netty version to be compliant with gatling's
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-web')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('io.rest-assured:rest-assured:3.0.5')
+    testCompile('junit:junit:4.12')
+    testCompile('io.gatling.highcharts:gatling-charts-highcharts:2.3.1')
+    testCompile('org.scalatest:scalatest_2.11:3.0.1')
+}
+
+task startBootAppInBackground(type: com.github.psxpaul.task.JavaExecFork) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'se.david.labs.Application'
+    args = [ '--spring.profiles.active=default' ]
+    jvmArgs = [ '-Djava.awt.headless=true' ]
+    workingDir = "$projectDir/build/server"
+    standardOutput = "$projectDir/build/daemon.log"
+//    errorOutput = "$buildDir/daemon-error.log"
+    stopAfter = gatlingRun
+    waitForPort = 8080
+    waitForOutput = 'Started Application'
+    environment 'JAVA_HOME', "$projectDir/build/java"
+}
+
+gatlingRun.dependsOn startBootAppInBackground
