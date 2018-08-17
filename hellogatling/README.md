@@ -11,6 +11,10 @@ gradle gatlingRun
 
 # To run regular tests
 gradle clean build
+
+# To run tests and gatling
+mvn clean install -PgatlingRun
+
 ```
 
 ### TODO

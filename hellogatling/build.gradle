@@ -1,7 +1,6 @@
 group = 'se.david'
 version = '0.0.1-SNAPSHOT'
 
-
 buildscript {
     repositories {
         mavenCentral()
@@ -9,7 +8,6 @@ buildscript {
             url "https://plugins.gradle.org/m2/"
         }
     }
-
     dependencies {
         classpath(
                 'org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE',
@@ -63,3 +61,9 @@ task startBootAppInBackground(type: com.github.psxpaul.task.JavaExecFork) {
 }
 
 gatlingRun.dependsOn startBootAppInBackground
+
+test {
+    testLogging {
+        showStandardStreams = false
+    }
+}
