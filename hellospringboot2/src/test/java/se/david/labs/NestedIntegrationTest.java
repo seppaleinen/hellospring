@@ -38,7 +38,7 @@ class NestedIntegrationTest {
                             webClient.get().uri("/")
                                 .exchange()
                                 .expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8)
-                                .expectBody(SuperDto.class).isEqualTo(new SuperDto("Hello"))
+                                .expectBody(SuperDto.class).isEqualTo(new SuperDto("Jag älskar Kaisa!"))
                     )
             );
         }
