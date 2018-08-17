@@ -33,7 +33,7 @@ public class ConsumerIntegrationTest {
     private static final String IO_DATA = "{\"data\":\"hello\"}";
     public static final String FOO_RESPONSE = "{\n" +
             "  \"foo\": \"foo\",\n" +
-            "  \"bar\": \"bar\"\n" +
+            "  \"baz\": \"baz\"\n" +
             "}";
     @LocalServerPort
     private int port;
