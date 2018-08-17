@@ -1,18 +1,9 @@
-apply plugin: 'java'
-apply plugin: 'maven'
-
 group = 'se.david'
 version = '0.0.1-SNAPSHOT'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-tasks.withType(JavaCompile) {
-	options.encoding = 'UTF-8'
-}
-
 buildscript {
     ext{
-       springBootVersion = '2.0.0.RELEASE'
+        springBootVersion = '2.0.0.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -23,24 +14,35 @@ buildscript {
     }
 }
 
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
 repositories {
     mavenCentral()
 }
 
-apply plugin: 'org.springframework.boot'
-
 dependencies {
-    compile(group: 'org.springframework.boot', name: 'spring-boot-starter', version:"${springBootVersion}")
-    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:"${springBootVersion}")
-    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version:"${springBootVersion}")
+    compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-webflux')
 
-    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:"${springBootVersion}")
-    testCompile group: 'io.rest-assured', name: 'rest-assured', version:'3.0.5'
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('io.rest-assured:rest-assured:3.0.5')
 
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version:'5.0.0'
-    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.1.0')
+    testImplementation('org.junit.jupiter:junit-jupiter-api')
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine')
 }
 
 test {
     useJUnitPlatform()
+    testLogging {
+        showStandardStreams = false
+    }
 }

@@ -37,3 +37,9 @@ dependencies {
     testCompile('io.cucumber:cucumber-spring:2.4.0')
     testCompile('junit:junit:4.12')
 }
+
+test {
+    testLogging {
+        showStandardStreams = false
+    }
+}

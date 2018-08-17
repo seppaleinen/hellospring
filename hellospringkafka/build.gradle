@@ -31,11 +31,17 @@ repositories {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter')
     compile('org.springframework.boot:spring-boot-starter-web')
-    compile("org.springframework.kafka:spring-kafka:${springVersion}")
+    compile("org.springframework.kafka:spring-kafka")
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile("org.springframework.kafka:spring-kafka-test:${springVersion}")
+    testCompile("org.springframework.kafka:spring-kafka-test")
     testCompile('io.rest-assured:rest-assured:3.0.5')
     testCompile('org.awaitility:awaitility:3.0.0')
     testCompile('junit:junit:4.12')
+}
+
+test {
+    testLogging {
+        showStandardStreams = false
+    }
 }

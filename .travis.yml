@@ -16,4 +16,4 @@ cache:
 before_install:
   - chmod +x gradlew
 script:
-  - ./gradlew clean build --illegal-access=warn;
+  - ./gradlew clean build;
