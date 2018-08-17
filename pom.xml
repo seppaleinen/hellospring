@@ -9,6 +9,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>hellogatling</module>
         <module>hellopitestbdd</module>
         <module>hellospringboot2</module>
         <module>hellospringcucumber</module>

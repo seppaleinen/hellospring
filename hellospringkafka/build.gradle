@@ -1,39 +1,44 @@
-apply plugin: 'java'
-apply plugin: 'maven'
-
 group = 'se.david'
 version = '0.0.1-SNAPSHOT'
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-tasks.withType(JavaCompile) {
-	options.encoding = 'UTF-8'
-}
 
 buildscript {
     repositories {
         mavenCentral()
     }
-
     dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.10.RELEASE'
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:1.5.10.RELEASE')
     }
 }
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()
 }
 
-apply plugin: 'org.springframework.boot'
-
 dependencies {
-    compile(group: 'org.springframework.boot', name: 'spring-boot-starter', version:'1.5.10.RELEASE')
-    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'1.5.10.RELEASE')
-    compile group: 'org.springframework.kafka', name: 'spring-kafka', version:'1.3.4.RELEASE'
+    compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.kafka:spring-kafka')
+    compile('log4j:log4j:1.2.17') // Force kafka zookeeper to run better version of log4j
 
-    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'1.5.10.RELEASE')
-    testCompile group: 'org.springframework.kafka', name: 'spring-kafka-test', version:'1.3.4.RELEASE'
-    testCompile group: 'io.rest-assured', name: 'rest-assured', version:'3.0.5'
-    testCompile group: 'org.awaitility', name: 'awaitility', version:'3.0.0'
-    testCompile('log4j:log4j:1.2.17')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.kafka:spring-kafka-test')
+    testCompile('io.rest-assured:rest-assured:3.0.5')
+    testCompile('org.awaitility:awaitility:3.0.0')
+    testCompile('junit:junit:4.12')
+}
+
+test {
+    testLogging {
+        showStandardStreams = false
+    }
 }

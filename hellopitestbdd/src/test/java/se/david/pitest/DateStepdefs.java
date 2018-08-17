@@ -1,10 +1,11 @@
-package se.david;
+package se.david.pitest;
 
 import cucumber.api.Format;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Ignore;
+import se.david.pitest.DateCalculator;
 
 import java.util.Date;
 
@@ -21,7 +22,7 @@ public class DateStepdefs {
     }
 
     @When("^I ask if (.+) is in the past$")
-    public void I_ask_if_date_is_in_the_past(Date date) {
+    public void I_ask_if_date_is_in_the_past(@Format("yyyy-MM-dd") Date date) {
         result = calculator.isDateInThePast(date);
     }
 

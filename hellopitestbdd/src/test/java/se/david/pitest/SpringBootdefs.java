@@ -1,4 +1,4 @@
-package se.david;
+package se.david.pitest;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
