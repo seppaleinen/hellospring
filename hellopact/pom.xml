@@ -9,7 +9,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>hellopact-consumer</module>
+        <module>hellopact-consumer1</module>
+        <module>hellopact-consumer2</module>
         <module>hellopact-producer</module>
     </modules>
 </project>

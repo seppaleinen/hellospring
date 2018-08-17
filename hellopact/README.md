@@ -8,6 +8,11 @@ unexpected behaviours after deployment.
 Pact is a consumer driven test framework, which means that the consumer will  
 define a contract, that the producer then will have to fulfill. 
 
+Important to differentiate between contract tests, and functional tests.  
+The Contract tests, are not to be used for validating actual logic around integrations,  
+as that creates too much of a complexity.
+
+
  
 ```bash
 # Start pact-broker
