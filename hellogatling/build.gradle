@@ -64,6 +64,6 @@ gatlingRun.dependsOn startBootAppInBackground
 
 test {
     testLogging {
-        showStandardStreams = false
+        showStandardStreams = true
     }
 }
