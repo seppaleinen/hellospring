@@ -13,3 +13,7 @@ buildscript {
 subprojects {
     apply plugin: 'info.solidsoft.pitest'
 }
+
+wrapper {
+    gradleVersion = '4.9'
+}
