@@ -41,6 +41,7 @@ public class PactTest extends AbstractSpringRunner {
                 .statusCode(HttpStatus.OK.value())
                 .body("", equalTo(expectedJson.getMap(""))); // This is to easier validate json response
     }
+
     @State(value = "simple call to producer to get foo document")
     public void verifyConsumerFooPact() {
         JsonPath expectedJson = new JsonPath(FOO_RESPONSE);

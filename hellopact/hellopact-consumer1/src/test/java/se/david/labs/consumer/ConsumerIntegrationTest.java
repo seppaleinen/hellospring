@@ -66,7 +66,7 @@ public class ConsumerIntegrationTest {
     public RequestResponsePact simpleCallToProducerForFoo(PactDslWithProvider builder) {
         return builder
                 .given("simple call to producer to get foo document")
-                .uponReceiving("A request to producer endpoint")
+                .uponReceiving("A request to producer foo endpoint")
                 .path("/producer/foo")
                 .method(HttpMethod.GET.name())
                 .willRespondWith()
