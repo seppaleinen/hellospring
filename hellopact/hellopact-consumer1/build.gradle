@@ -1,0 +1,68 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'au.com.dius.pact'
+
+group = 'se.david'
+version = '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+buildscript {
+    ext {
+        pactVersion = '3.5.19'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE')
+        classpath("au.com.dius:pact-jvm-provider-gradle_2.12:${pactVersion}")
+    }
+}
+
+pact {
+    publish {
+        pactDirectory = 'build/pacts' // defaults to $buildDir/pacts
+        pactBrokerUrl = 'http://localhost:8099'
+    }
+
+    serviceProviders {
+
+        hellopactProvider {
+            protocol = 'http'
+            host = 'localhost'
+            port = 8082
+            path = '/'
+
+            // Again, you can define as many consumers for each provider as you need, but each must have a unique name
+            hasPactWith('hellopact-consumer1') {
+                // currently supports a file path using file() or a URL using url()
+                pactSource = file("$buildDir/pacts/hellopact-consumer1-hellopact-producer.json")
+            }
+        }
+    }
+}
+
+
+test {
+    systemProperties['pact.rootDir'] = "$buildDir/pacts"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-web')
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('io.rest-assured:rest-assured:3.0.5')
+    testCompile('junit:junit:4.12')
+    testCompile('org.springframework.cloud:spring-cloud-contract-wiremock:1.2.1.RELEASE')
+    testCompile("au.com.dius:pact-jvm-consumer-junit_2.12:${pactVersion}")
+}

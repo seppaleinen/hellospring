@@ -47,7 +47,7 @@ public class ConsumerIntegrationTest {
         RestAssured.port = port;
     }
 
-    @Pact(provider = "hellopact-producer", consumer = "hellopact-consumer")
+    @Pact(provider = "hellopact-producer", consumer = "hellopact-consumer1")
     public RequestResponsePact simpleCallToProducer(PactDslWithProvider builder) {
         return builder
                 .given("simple call to producer")
@@ -62,7 +62,7 @@ public class ConsumerIntegrationTest {
                 .body(IO_DATA, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .toPact();
     }
-    @Pact(provider = "hellopact-producer", consumer = "hellopact-consumer")
+    @Pact(provider = "hellopact-producer", consumer = "hellopact-consumer1")
     public RequestResponsePact simpleCallToProducerForFoo(PactDslWithProvider builder) {
         return builder
                 .given("simple call to producer to get foo document")
@@ -83,7 +83,7 @@ public class ConsumerIntegrationTest {
         given()
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .when()
-                .get("/consumer/getfoo")
+                .get("/consumer1/getfoo")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("", equalTo(expectedJson.getMap(""))); // This is to easier validate json response
@@ -98,7 +98,7 @@ public class ConsumerIntegrationTest {
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .body(IO_DATA)
                 .when()
-                .post("/consume")
+                .post("/consumer1")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("", equalTo(expectedJson.getMap(""))); // This is to easier validate json response

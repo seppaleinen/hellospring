@@ -39,9 +39,9 @@ pact {
             path = '/'
 
             // Again, you can define as many consumers for each provider as you need, but each must have a unique name
-            hasPactWith('hellopact-consumer') {
+            hasPactWith('hellopact-consumer2') {
                 // currently supports a file path using file() or a URL using url()
-                pactSource = file("$buildDir/pacts/hellopact-consumer-hellopact-producer.json")
+                pactSource = file("$buildDir/pacts/hellopact-consumer2-hellopact-producer.json")
             }
         }
     }

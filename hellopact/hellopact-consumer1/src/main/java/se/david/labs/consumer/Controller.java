@@ -22,7 +22,7 @@ class Controller {
     private String producerEndpoint;
 
     @PostMapping(
-            value = "/consume",
+            value = "/consumer1",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseEntity<RequestResponseDto> call(@RequestBody RequestResponseDto request) {
@@ -34,7 +34,7 @@ class Controller {
         }
         return ResponseEntity.ok(response.getBody());
     }
-    @GetMapping("/consumer/getfoo")
+    @GetMapping("/consumer1/getfoo")
     String getFoo() {
         return REST_TEMPLATE.getForObject(producerEndpoint + "/producer/foo", String.class);
     }
