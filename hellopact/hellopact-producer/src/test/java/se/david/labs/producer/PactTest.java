@@ -1,6 +1,5 @@
 package se.david.labs.producer;
 
-import au.com.dius.pact.provider.junit.IgnoreNoPactsToVerify;
 import au.com.dius.pact.provider.junit.Provider;
 import au.com.dius.pact.provider.junit.State;
 import au.com.dius.pact.provider.junit.loader.PactBroker;
@@ -19,8 +18,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 @RunWith(SpringRestPactRunner.class)
 @Provider("hellopact-producer")
-@IgnoreNoPactsToVerify
-@PactBroker(host = "${pactbroker.hostname:localhost}", port = "${pactbroker.port:8099}")
+@PactBroker(host = "${pactbroker.hostname:localhost}", port = "${pactbroker.port:8099}", failIfNoPactsFound = false)
 public class PactTest extends AbstractSpringRunner {
     private static final String IO_DATA = "{\"data\":\"hello\"}";
     private static final String FOO_RESPONSE = "{\"foo\":\"foo\",\"bar\":\"bar\",\"baz\":\"baz\"}";
