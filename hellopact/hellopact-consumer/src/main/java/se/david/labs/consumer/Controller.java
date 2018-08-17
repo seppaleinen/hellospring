@@ -6,6 +6,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,13 +28,16 @@ class Controller {
     ResponseEntity<RequestResponseDto> call(@RequestBody RequestResponseDto request) {
         HttpEntity<RequestResponseDto> httpEntity = new HttpEntity<>(request, createHeaders());
         ResponseEntity<RequestResponseDto> response = REST_TEMPLATE.postForEntity(
-                producerEndpoint, httpEntity, RequestResponseDto.class);
+                producerEndpoint + "/producer", httpEntity, RequestResponseDto.class);
         if (response.getBody() == null) {
             throw new IllegalStateException("No body returned from producer");
         }
         return ResponseEntity.ok(response.getBody());
     }
-
+    @GetMapping("/consumer/getfoo")
+    String getFoo() {
+        return REST_TEMPLATE.getForObject(producerEndpoint + "/producer/foo", String.class);
+    }
     private HttpHeaders createHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);

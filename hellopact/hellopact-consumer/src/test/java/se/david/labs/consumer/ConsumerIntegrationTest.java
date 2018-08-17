@@ -31,6 +31,10 @@ import static org.hamcrest.CoreMatchers.equalTo;
 @ContextConfiguration(loader = SpringBootContextLoader.class)
 public class ConsumerIntegrationTest {
     private static final String IO_DATA = "{\"data\":\"hello\"}";
+    public static final String FOO_RESPONSE = "{\n" +
+            "  \"foo\": \"foo\",\n" +
+            "  \"bar\": \"bar\"\n" +
+            "}";
     @LocalServerPort
     private int port;
 
@@ -58,7 +62,32 @@ public class ConsumerIntegrationTest {
                 .body(IO_DATA, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .toPact();
     }
+    @Pact(provider = "hellopact-producer", consumer = "hellopact-consumer")
+    public RequestResponsePact simpleCallToProducerForFoo(PactDslWithProvider builder) {
+        return builder
+                .given("simple call to producer to get foo document")
+                .uponReceiving("A request to producer endpoint")
+                .path("/producer/foo")
+                .method(HttpMethod.GET.name())
+                .willRespondWith()
+                .status(HttpStatus.OK.value())
+                .body(FOO_RESPONSE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .toPact();
+    }
 
+    @Test
+    @PactVerification(fragment = "simpleCallToProducerForFoo")
+    public void testConsumeFooEndpoint() {
+        JsonPath expectedJson = new JsonPath(FOO_RESPONSE);
+
+        given()
+                .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .when()
+                .get("/consumer/getfoo")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("", equalTo(expectedJson.getMap(""))); // This is to easier validate json response
+    }
     @Test
     @PactVerification(fragment = "simpleCallToProducer")
     public void testConsumeEndpoint() {

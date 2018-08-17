@@ -23,6 +23,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 @PactBroker(host = "${pactbroker.hostname:localhost}", port = "${pactbroker.port:8099}")
 public class PactTest extends AbstractSpringRunner {
     private static final String IO_DATA = "{\"data\":\"hello\"}";
+    private static final String FOO_RESPONSE = "{\"foo\":\"foo\",\"bar\":\"bar\",\"baz\":\"baz\"}";
 
     @TestTarget
     public final Target target = new SpringBootHttpTarget();
@@ -36,6 +37,17 @@ public class PactTest extends AbstractSpringRunner {
                 .body(IO_DATA)
                 .when()
                 .post("/producer")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("", equalTo(expectedJson.getMap(""))); // This is to easier validate json response
+    }
+    @State(value = "simple call to producer to get foo document")
+    public void verifyConsumerFooPact() {
+        JsonPath expectedJson = new JsonPath(FOO_RESPONSE);
+
+        given()
+                .when()
+                .get("/producer/foo")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("", equalTo(expectedJson.getMap(""))); // This is to easier validate json response

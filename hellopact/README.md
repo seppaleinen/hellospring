@@ -15,3 +15,11 @@
 gradle pactVerify
 gradle pactPublish
 ```
+
+
+* http://localhost:8099 - Broker UI
+
+### Questions
+
+* Contract versioning
+* Pact lenient body validation
