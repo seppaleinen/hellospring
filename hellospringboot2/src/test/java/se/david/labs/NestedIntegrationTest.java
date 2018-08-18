@@ -13,11 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import se.david.labs.dto.SuperDto;
+import se.david.labs.repository.entity.NewEntity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -61,13 +58,29 @@ class NestedIntegrationTest {
     class DjKhaled {
         @Test
         @DisplayName("Don't ever play yoself")
-        void dontEverPlayYourself() {}
+        void dontEverPlayYourself() {
+            webClient.post().uri("/reactive")
+                    .exchange()
+                    .expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8)
+                    .expectBodyList(NewEntity.class).hasSize(200000);
+        }
         @Test
         @DisplayName("Who U love?")
-        void whoYouLove() {}
+        void whoYouLove() {
+            webClient.get().uri("/reactive/123")
+                    .exchange()
+                    .expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8)
+                    .expectBody(NewEntity.class).isEqualTo(new NewEntity(123L));
+
+        }
         @Test
         @DisplayName("Who yo friends love?")
-        void WhoYourFriendsLove() {}
+        void WhoYourFriendsLove() {
+            webClient.get().uri("/reactive")
+                    .exchange()
+                    .expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8)
+                    .expectBodyList(NewEntity.class).hasSize(2000);
+        }
         @Test
         @DisplayName("Baby U smart")
         void babyYouSmart() {}
