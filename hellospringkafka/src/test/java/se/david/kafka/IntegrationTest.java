@@ -53,7 +53,7 @@ public class IntegrationTest {
                 .then()
                 .statusCode(HttpStatus.OK.value());
 
-        await().atMost(500, TimeUnit.MILLISECONDS)
+        await().atMost(1000, TimeUnit.MILLISECONDS)
                 .until(receiver::getReceivedMessage, is("message"));
     }
 
@@ -66,7 +66,7 @@ public class IntegrationTest {
         await()
                 .pollDelay(50, TimeUnit.MILLISECONDS)
                 .pollInterval(1, TimeUnit.MILLISECONDS)
-                .atMost(100, TimeUnit.MILLISECONDS)
+                .atMost(500, TimeUnit.MILLISECONDS)
                 .until(receiver::getReceivedMessage, is(message));
     }
 }
