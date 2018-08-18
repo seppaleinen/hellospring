@@ -2,15 +2,11 @@ group = 'se.david'
 version = '0.0.1-SNAPSHOT'
 
 buildscript {
-    ext{
-        springBootVersion = '2.0.0.RELEASE'
-    }
     repositories {
         mavenCentral()
     }
-
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE')
     }
 }
 
@@ -34,7 +30,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-webflux')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('com.h2database:h2')
-    compile('com.sun.xml.bind:jaxb-api:2.2.11')
+    compile('javax.xml.bind:jaxb-api:2.2.11')
     compile('com.sun.xml.bind:jaxb-core:2.2.11')
     compile('com.sun.xml.bind:jaxb-impl:2.2.11')
     compile('javax.activation:activation:1.1.1')
