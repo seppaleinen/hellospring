@@ -1,12 +1,8 @@
 package se.david.labs.repository.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.util.Objects;
 
-@Entity
 public class NewEntity {
-    @Id
     private Long id;
 
     public NewEntity() {}
