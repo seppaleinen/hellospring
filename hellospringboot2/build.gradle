@@ -28,10 +28,10 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-webflux')
-    compile('javax.xml.bind:jaxb-api:2.2.11')
-    compile('com.sun.xml.bind:jaxb-core:2.2.11')
-    compile('com.sun.xml.bind:jaxb-impl:2.2.11')
-    compile('javax.activation:activation:1.1.1')
+    compile('javax.xml.bind:jaxb-api:2.2.11')    // deps removed in jdk11
+    compile('com.sun.xml.bind:jaxb-core:2.2.11') // deps removed in jdk11
+    compile('com.sun.xml.bind:jaxb-impl:2.2.11') // deps removed in jdk11
+    compile('javax.activation:activation:1.1.1') // deps removed in jdk11
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
 
