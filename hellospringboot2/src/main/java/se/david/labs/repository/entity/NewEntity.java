@@ -1,8 +1,12 @@
 package se.david.labs.repository.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
+@Entity
 public class NewEntity {
+    @Id
     private Long id;
 
     public NewEntity() {}
@@ -26,5 +30,12 @@ public class NewEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "NewEntity{" +
+                "id=" + id +
+                '}';
     }
 }
