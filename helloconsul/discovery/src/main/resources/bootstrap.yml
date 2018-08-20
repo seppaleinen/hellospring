@@ -1,0 +1,20 @@
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      enabled: true
+      discovery:
+        register: false
+        health-check-path: /health
+---
+spring:
+  profiles: test
+  cloud:
+    consul:
+      host: localhost
+      port: 8502
+      enabled: true
+      discovery:
+        register: false
+        health-check-path: /health

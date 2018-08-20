@@ -1,7 +1,8 @@
 rootProject.name = 'hellospring'
 
 include 'helloconsul'
-include 'helloconsul:helloconsul'
+include 'helloconsul:discovery'
+include 'helloconsul:register'
 include 'hellogatling'
 include 'hellopitestbdd'
 include 'hellospringboot2'

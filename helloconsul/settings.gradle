@@ -1,3 +1,4 @@
 rootProject.name = 'helloconsul'
 
-include 'helloconsul'
+include 'discovery'
+include 'register'
