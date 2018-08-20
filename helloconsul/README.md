@@ -2,12 +2,19 @@
 
 Testing out consul
 
+What I want to do:
+* Register one service to consul
+* Call that service through ribbon, via consul service-name from another service
+* Automate all steps
+
 ### Using
 * Spring-boot 2
 * Embedded consul
 
 ### Commands 
 ```bash
+docker-compose up -d
+
 gradle clean build
 
 mvn clean install

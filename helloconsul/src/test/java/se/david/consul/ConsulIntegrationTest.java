@@ -3,6 +3,7 @@ package se.david.consul;
 import com.pszymczyk.consul.ConsulStarter;
 import com.pszymczyk.consul.junit.ConsulResource;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -39,14 +40,18 @@ public class ConsulIntegrationTest {
                 .get("/health")
                 .then()
                 .statusCode(HttpStatus.OK.value())
+                .contentType(ContentType.JSON)
                 .body("status", CoreMatchers.equalTo("UP"));
     }
 
     @Test
     public void callRest() {
         given()
+                .accept(ContentType.JSON)
                 .get("/ping/hello")
                 .then()
-                .statusCode(HttpStatus.OK.value());
+                .statusCode(HttpStatus.OK.value())
+                .contentType(ContentType.JSON)
+                .body("message", CoreMatchers.equalTo("hello"));
     }
 }
