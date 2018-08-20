@@ -21,7 +21,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import static io.restassured.RestAssured.given;
+import static org.junit.Assert.fail;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -44,18 +49,22 @@ public class ConsulIntegrationTest {
     }
 
     private void registerService() {
-        ConsulData data = new ConsulData("dc1",
-                "google",
-                "http://localhost:8089",
-                new ConsulData.ConsulService("register", 8089));
+        try {
+            String path = this.getClass().getClassLoader().getResource("consul-register.json").getPath();
+            String content = new String(Files.readAllBytes(Paths.get(path)));
 
-        String url = String.format("http://localhost:%s/v1/catalog/register", consul.getHttpPort());
+            String url = String.format("http://localhost:%s/v1/catalog/register", consul.getHttpPort());
 
-        given().contentType(ContentType.JSON)
-                .body(data)
-                .put(url)
-                .then()
-                .statusCode(HttpStatus.OK.value());
+            given().contentType(ContentType.JSON)
+                    .body(content)
+                    .put(url)
+                    .then()
+                    .statusCode(HttpStatus.OK.value());
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail("No can do: " + e.getMessage());
+        }
+
     }
 
     @Test
@@ -77,53 +86,5 @@ public class ConsulIntegrationTest {
                 .statusCode(HttpStatus.OK.value())
                 .contentType(ContentType.JSON)
                 .body("message", CoreMatchers.equalTo("hello"));
-    }
-
-    public static class ConsulData {
-        private String Datacenter;
-        private String Node;
-        private String Address;
-        private ConsulService Service;
-
-        ConsulData(String DataCenter, String Node, String Address, ConsulService Service) {
-            this.Datacenter = DataCenter;
-            this.Node = Node;
-            this.Address = Address;
-            this.Service = Service;
-        }
-
-        public String getDatacenter() {
-            return Datacenter;
-        }
-
-        public String getNode() {
-            return Node;
-        }
-
-        public String getAddress() {
-            return Address;
-        }
-
-        public ConsulService getService() {
-            return Service;
-        }
-
-        public static class ConsulService {
-            private String Service;
-            private int Port;
-
-            public ConsulService(String Service, int Port) {
-                this.Service = Service;
-                this.Port = Port;
-            }
-
-            public String getService() {
-                return Service;
-            }
-
-            public int getPort() {
-                return Port;
-            }
-        }
     }
 }

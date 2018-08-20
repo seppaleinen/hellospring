@@ -1,0 +1,17 @@
+{
+  "Datacenter": "dc1",
+  "Node": "newNode",
+  "Address": "http://localhost",
+  "Service": {
+    "ID": "google",
+    "Service": "google",
+    "Address": "http://localhost",
+    "Port": 8089
+  },
+  "Check": {
+    "Node": "newNode",
+    "CheckID": "service:google",
+    "Status": "passing",
+    "ServiceID": "google"
+  }
+}
