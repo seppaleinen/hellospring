@@ -45,6 +45,6 @@ dependencies {
 
 test {
     testLogging {
-        showStandardStreams = false
+        showStandardStreams = true
     }
 }
