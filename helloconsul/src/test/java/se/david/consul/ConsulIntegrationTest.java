@@ -1,7 +1,9 @@
 package se.david.consul;
 
+import com.pszymczyk.consul.ConsulStarter;
 import com.pszymczyk.consul.junit.ConsulResource;
 import io.restassured.RestAssured;
+import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -22,13 +24,22 @@ public class ConsulIntegrationTest {
     @LocalServerPort
     private int port;
 
-    @ClassRule
-    public static final ConsulResource consul = new ConsulResource();
+//    @ClassRule
+//    public static final ConsulResource consul = new ConsulResource();
 
     @Before
     public void before() {
         RestAssured.port = port;
-        consul.reset();
+//        consul.reset();
+    }
+
+    @Test
+    public void healthShouldBeUp() {
+        given()
+                .get("/health")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("status", CoreMatchers.equalTo("UP"));
     }
 
     @Test

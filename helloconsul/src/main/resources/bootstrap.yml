@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    consul:
+      discovery.health-check-path: /health
+      enabled: true
+---
+spring:
+  profiles: test
+  cloud:
+    consul:
+      discovery.health-check-path: /health
+      enabled: false
+---
+spring:
+  profiles: default
+  cloud:
+    consul:
+      discovery.health-check-path: /health
+      enabled: false
