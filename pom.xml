@@ -14,5 +14,6 @@
         <module>hellospringboot2</module>
         <module>hellospringcucumber</module>
         <module>hellospringkafka</module>        
+        <module>helloconsul</module>
     </modules>
 </project>
