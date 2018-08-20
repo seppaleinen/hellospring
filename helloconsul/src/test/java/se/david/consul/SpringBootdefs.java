@@ -1,21 +1,21 @@
 package se.david.consul;
 
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static io.restassured.RestAssured.given;
 
+@RunWith(SpringRunner.class)
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = Application.class
 )
-@ContextConfiguration
 public class SpringBootdefs {
     @LocalServerPort
     private int port;
@@ -28,10 +28,8 @@ public class SpringBootdefs {
     @Test
     public void callRest() {
         given()
-                .contentType(ContentType.JSON)
                 .get("/ping/hello")
                 .then()
-                .statusCode(HttpStatus.OK.value())
-                .;
+                .statusCode(HttpStatus.OK.value());
     }
 }

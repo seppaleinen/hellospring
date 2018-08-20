@@ -12,9 +12,7 @@ import javax.validation.constraints.NotNull;
 @RestController
 public class ApiController {
 
-    @GetMapping(path = "/ping/{message}",
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(path = "/ping/{message}")
     ResponseEntity<String> ping(@PathVariable("message") @Valid @NotNull String message) {
         return ResponseEntity.ok(String.format("PONG: %s", message));
     }
