@@ -35,7 +35,7 @@ public class Application {
 
     @GetMapping(path = "/ping/{message}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseEntity<String> ping(@PathVariable("message") @Valid @NotEmpty String message) {
-        String response = restTemplate.getForObject("http://google/ping/message", String.class);
+        String response = restTemplate.getForObject("http://newNode/ping/message", String.class);
 
         System.out.println("RESPONSE: " + response);
         return ResponseEntity.ok(String.format("{\"message\": \"%s\"}", message));

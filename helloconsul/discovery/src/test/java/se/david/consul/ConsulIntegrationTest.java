@@ -1,5 +1,6 @@
 package se.david.consul;
 
+import com.github.tomakehurst.wiremock.client.WireMock;
 import com.pszymczyk.consul.junit.ConsulResource;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -10,7 +11,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -18,6 +22,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.fail;
 
@@ -26,6 +32,7 @@ import static org.junit.Assert.fail;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = Application.class
 )
+@AutoConfigureWireMock(port = 9999)
 @ActiveProfiles("test")
 public class ConsulIntegrationTest {
     @LocalServerPort
@@ -39,6 +46,11 @@ public class ConsulIntegrationTest {
         RestAssured.port = port;
         consul.reset();
         registerService();
+        stubFor(WireMock.get(WireMock.urlEqualTo("/ping/message")).willReturn(
+                aResponse()
+                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .withBody(String.format("{\"message\": \"%s\"}", "message")))
+        );
     }
 
     private void registerService() {

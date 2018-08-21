@@ -10,6 +10,7 @@ What I want to do:
 ### Using
 * Spring-boot 2
 * Embedded consul
+* Wiremock
 
 ### Commands 
 ```bash
