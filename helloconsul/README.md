@@ -22,7 +22,7 @@ mvn clean install
 
 ### Endpoints
 
-* Consul - http://localhost:8500 
+* [consul](http://localhost:8500/) - http://localhost:8500/
 
 #### Documentation
 
