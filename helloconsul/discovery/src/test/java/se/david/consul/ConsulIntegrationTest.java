@@ -58,17 +58,29 @@ public class ConsulIntegrationTest {
             String path = this.getClass().getClassLoader().getResource("consul-register.json").getPath();
             String content = new String(Files.readAllBytes(Paths.get(path)));
 
-            String url = String.format("http://localhost:%s/v1/catalog/register", consul.getHttpPort());
-
+            // Register consul-register to consul
             given().contentType(ContentType.JSON)
                     .body(content)
-                    .put(url)
+                    .put(String.format("http://localhost:%s/v1/catalog/register", consul.getHttpPort()))
                     .then()
                     .statusCode(HttpStatus.OK.value());
 
+            // Mock consul-register health endpoint
+            stubFor(WireMock.get(WireMock.urlEqualTo("/health")).willReturn(
+                    aResponse()
+                            .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                            .withBody("{\"status\": \"UP\"}"))
+            );
+
+            String response = given().get(String.format("http://localhost:%s/v1/health/state/passing", consul.getHttpPort()))
+                    .thenReturn().body().asString();
+
+            System.out.println("RESPONSE: " + response);
+
+            // Trigger consul check
             /**
              * await until accessable
-             * 
+             *
              * http://localhost:8500/v1/health/node/{Node}
              * CheckID: "serfHealth"
              * CheckID: "service:consul-register-8089" ? Maybe needed
@@ -78,7 +90,6 @@ public class ConsulIntegrationTest {
             e.printStackTrace();
             fail("No can do: " + e.getMessage());
         }
-
     }
 
     @Test
