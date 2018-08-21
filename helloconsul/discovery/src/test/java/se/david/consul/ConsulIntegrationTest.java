@@ -65,6 +65,15 @@ public class ConsulIntegrationTest {
                     .put(url)
                     .then()
                     .statusCode(HttpStatus.OK.value());
+
+            /**
+             * await until accessable
+             * 
+             * http://localhost:8500/v1/health/node/{Node}
+             * CheckID: "serfHealth"
+             * CheckID: "service:consul-register-8089" ? Maybe needed
+             * Status: "passing"
+             */
         } catch (IOException e) {
             e.printStackTrace();
             fail("No can do: " + e.getMessage());
