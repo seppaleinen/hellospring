@@ -21,10 +21,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.concurrent.TimeUnit;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static io.restassured.RestAssured.given;
+import static org.awaitility.Awaitility.await;
 import static org.junit.Assert.fail;
 
 @RunWith(SpringRunner.class)
@@ -44,13 +47,7 @@ public class ConsulIntegrationTest {
     @Before
     public void before() {
         RestAssured.port = port;
-        consul.reset();
         registerService();
-        stubFor(WireMock.get(WireMock.urlEqualTo("/ping/message")).willReturn(
-                aResponse()
-                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
-                        .withBody(String.format("{\"message\": \"%s\"}", "message")))
-        );
     }
 
     private void registerService() {
@@ -61,7 +58,7 @@ public class ConsulIntegrationTest {
             // Register consul-register to consul
             given().contentType(ContentType.JSON)
                     .body(content)
-                    .put(String.format("http://localhost:%s/v1/catalog/register", consul.getHttpPort()))
+                    .put(String.format("http://localhost:%s/v1/agent/service/register", consul.getHttpPort()))
                     .then()
                     .statusCode(HttpStatus.OK.value());
 
@@ -72,20 +69,12 @@ public class ConsulIntegrationTest {
                             .withBody("{\"status\": \"UP\"}"))
             );
 
-            String response = given().get(String.format("http://localhost:%s/v1/health/state/passing", consul.getHttpPort()))
-                    .thenReturn().body().asString();
-
-            System.out.println("RESPONSE: " + response);
-
-            // Trigger consul check
-            /**
-             * await until accessable
-             *
-             * http://localhost:8500/v1/health/node/{Node}
-             * CheckID: "serfHealth"
-             * CheckID: "service:consul-register-8089" ? Maybe needed
-             * Status: "passing"
-             */
+            String expected = "HTTP GET http://localhost:9999/health: 200 OK";
+            await().pollInterval(50L, TimeUnit.MILLISECONDS)
+                    .atMost(5L, TimeUnit.SECONDS).until(() -> given()
+                    .get(String.format("http://localhost:%s/v1/health/state/passing", consul.getHttpPort()))
+                    .thenReturn()
+                    .body().asString().contains(expected));
         } catch (IOException e) {
             e.printStackTrace();
             fail("No can do: " + e.getMessage());
@@ -104,12 +93,20 @@ public class ConsulIntegrationTest {
 
     @Test
     public void callRest() {
+        stubFor(WireMock.get(WireMock.urlMatching("/ping/.*")).willReturn(
+                aResponse()
+                        .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .withBody(String.format("{\"message\": \"%s\"}", "message")))
+        );
+
         given()
                 .accept(ContentType.JSON)
                 .get("/ping/hello")
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .contentType(ContentType.JSON)
-                .body("message", CoreMatchers.equalTo("hello"));
+                .body("message", CoreMatchers.equalTo("message"));
+
+        verify(WireMock.getRequestedFor(WireMock.urlMatching("/ping/hello")));
     }
 }

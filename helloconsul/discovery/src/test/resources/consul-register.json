@@ -1,17 +1,15 @@
 {
-  "Datacenter": "dc1",
-  "Node": "newNode",
-  "Address": "http://localhost",
-  "Service": {
-    "ID": "google",
-    "Service": "google",
-    "Address": "http://localhost",
-    "Port": 9999
-  },
+  "ID": "consul-register",
+  "Name": "consul-register",
+  "Tags": [
+    "secure=false"
+  ],
+  "Address": "localhost",
+  "Port": 9999,
+  "EnableTagOverride": false,
   "Check": {
-    "Node": "newNode",
-    "CheckID": "service:google",
-    "Status": "passing",
-    "ServiceID": "google"
+    "DeregisterCriticalServiceAfter": "90m",
+    "HTTP": "http://localhost:9999/health",
+    "Interval": "1s"
   }
 }
