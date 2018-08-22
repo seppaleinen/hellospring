@@ -1,0 +1,7 @@
+version: '2'
+services:
+  consul:
+    container_name: consul
+    image: consul
+    ports:
+      - "8500:8500"

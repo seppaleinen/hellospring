@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery.health-check-path: /health
+      enabled: true
+---
+spring:
+  profiles: test
+  cloud:
+    consul:
+      host: localhost
+      port: 8503
+      discovery.health-check-path: /health
+      enabled: true
