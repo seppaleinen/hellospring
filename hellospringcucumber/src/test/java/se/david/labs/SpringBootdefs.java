@@ -1,4 +1,4 @@
-package se.david.rest;
+package se.david.labs;
 
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;

@@ -1,6 +1,5 @@
 package se.david.labs;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicTest;
@@ -18,10 +17,7 @@ import se.david.labs.dto.SuperDto;
 import se.david.labs.repository.NewEntityRepository;
 import se.david.labs.repository.entity.NewEntity;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
