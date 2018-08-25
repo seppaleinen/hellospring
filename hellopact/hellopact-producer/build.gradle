@@ -39,7 +39,12 @@ dependencies {
 }
 
 test {
+    exclude '**/*IT.*'
     testLogging {
         showStandardStreams = false
     }
+}
+
+task pact(type: Test) {
+    include '**/*IT.*'
 }

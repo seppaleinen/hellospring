@@ -24,6 +24,9 @@ gradle clean build
 gradle pactPublish
 # Verify consumers against a running producer with the generated contracts, as a smoketest
 gradle pactVerify
+
+# To run producer tests against broker
+gradle clean build pact
 ```
 
 * http://localhost:8099 - Broker UI

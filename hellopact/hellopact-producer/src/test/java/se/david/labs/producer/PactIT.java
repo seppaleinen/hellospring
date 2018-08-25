@@ -19,7 +19,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 @RunWith(SpringRestPactRunner.class)
 @Provider("hellopact-producer")
 @PactBroker(host = "${pactbroker.hostname:localhost}", port = "${pactbroker.port:8099}", failIfNoPactsFound = false)
-public class PactTest extends AbstractSpringRunner {
+public class PactIT extends AbstractSpringRunner {
     private static final String IO_DATA = "{\"data\":\"hello\"}";
     private static final String FOO_RESPONSE = "{\"foo\":\"foo\",\"bar\":\"bar\",\"baz\":\"baz\"}";
 
