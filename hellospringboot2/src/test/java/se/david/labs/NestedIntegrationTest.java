@@ -108,10 +108,18 @@ public class NestedIntegrationTest {
         }
         @Test
         @DisplayName("Baby U smart")
-        void babyYouSmart() {}
+        void babyYouSmart() {
+            webClient.get().uri("/health")
+                    .exchange()
+                    .expectStatus().isOk();
+        }
         @Test
         @DisplayName("U Loyal")
-        void youLoyal() {}
+        void youLoyal() {
+            webClient.get().uri("/health")
+                    .exchange()
+                    .expectStatus().isOk();
+        }
     }
 
 

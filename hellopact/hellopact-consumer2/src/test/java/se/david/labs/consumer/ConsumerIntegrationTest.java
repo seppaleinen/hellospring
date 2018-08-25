@@ -31,7 +31,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 @ContextConfiguration(loader = SpringBootContextLoader.class)
 public class ConsumerIntegrationTest {
     private static final String IO_DATA = "{\"data\":\"hello\"}";
-    public static final String FOO_RESPONSE = "{\n" +
+    private static final String FOO_RESPONSE = "{\n" +
             "  \"foo\": \"foo\",\n" +
             "  \"bar\": \"bar\"\n" +
             "}";

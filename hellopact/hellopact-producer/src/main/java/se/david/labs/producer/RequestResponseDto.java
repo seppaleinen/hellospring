@@ -3,12 +3,6 @@ package se.david.labs.producer;
 public class RequestResponseDto {
     private String data;
 
-    public RequestResponseDto() {}
-
-    public RequestResponseDto(String data) {
-        this.data = data;
-    }
-
     public String getData() {
         return data;
     }
