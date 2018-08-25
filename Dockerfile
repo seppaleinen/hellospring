@@ -11,13 +11,13 @@ ADD . .
 RUN ./gradlew clean build
 
 
-# FROM openjdk:11-jdk-slim
+FROM openjdk:11-jdk-slim
 
-# ADD gradlew .
-# ADD gradle gradle
-# RUN chmod +x gradlew
-# RUN ./gradlew --version
+ADD gradlew .
+ADD gradle gradle
+RUN chmod +x gradlew
+RUN ./gradlew --version
 
-# ADD . .
+ADD . .
 
-# RUN ./gradlew clean build
+RUN ./gradlew clean build
