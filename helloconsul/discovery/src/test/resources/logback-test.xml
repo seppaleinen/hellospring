@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <!-- Turning down the wiremock logging -->
+    <logger name="com.github.tomakehurst.wiremock" level="WARN"/>
+    <logger name="wiremock.org" level="ERROR"/>
+    <logger name="WireMock" level="WARN"/>
+    <!-- wiremock has per enpoint servlet logging -->`enter code here`
+    <logger name="/" level="WARN"/>
+
+    <!-- Turning down the embedded consul logging -->
+    <logger name="com.pszymczyk.consul.ConsulStarter" level="WARN"/>
+</configuration>

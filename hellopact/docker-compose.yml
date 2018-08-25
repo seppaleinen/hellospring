@@ -1,0 +1,24 @@
+version: '2'
+services:
+  broker_app:
+    container_name: pact-broker
+    image: dius/pact-broker
+    ports:
+      - "8099:80"
+    links:
+      - postgres
+    environment:
+      PACT_BROKER_DATABASE_USERNAME: postgres
+      PACT_BROKER_DATABASE_PASSWORD: password
+      PACT_BROKER_DATABASE_HOST: postgres
+      PACT_BROKER_DATABASE_NAME: postgres
+
+  postgres:
+    container_name: postgres
+    image: postgres:10-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres

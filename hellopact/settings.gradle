@@ -1,0 +1,5 @@
+rootProject.name = 'hellopact'
+
+include 'hellopact-consumer1'
+include 'hellopact-consumer2'
+include 'hellopact-producer'
