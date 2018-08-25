@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>se.david.labs</groupId>
+        <groupId>se.david</groupId>
         <artifactId>root</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>..</relativePath>
+        <relativePath>.</relativePath>
     </parent>
 
     <artifactId>helloconsul</artifactId>

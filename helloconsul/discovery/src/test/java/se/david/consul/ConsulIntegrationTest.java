@@ -44,6 +44,8 @@ public class ConsulIntegrationTest {
     @ClassRule
     public static final ConsulResource consul = new ConsulResource(8502);
 
+    private boolean initialized = false;
+
     @Before
     public void before() {
         RestAssured.port = port;
@@ -51,6 +53,9 @@ public class ConsulIntegrationTest {
     }
 
     private void registerService() {
+        if(initialized) {
+            return;
+        }
         try {
             String path = this.getClass().getClassLoader().getResource("consul-register.json").getPath();
             String content = new String(Files.readAllBytes(Paths.get(path)));
@@ -75,6 +80,8 @@ public class ConsulIntegrationTest {
                     .get(String.format("http://localhost:%s/v1/health/state/passing", consul.getHttpPort()))
                     .thenReturn()
                     .body().asString().contains(expected));
+
+            initialized = true;
         } catch (IOException e) {
             e.printStackTrace();
             fail("No can do: " + e.getMessage());
