@@ -36,17 +36,11 @@ public class Application {
     @GetMapping(path = "/ping/{message}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseEntity<Message> ping(@PathVariable("message") @Valid @NotEmpty String message) {
         Message messageResp = restTemplate.getForObject(String.format("http://consul-register/ping/%s", message), Message.class);
-        return ResponseEntity.ok(new Message(messageResp.getMessage()));
+        return ResponseEntity.ok(messageResp);
     }
 
     public static class Message {
         private String message;
-
-        public Message() {}
-
-        public Message(String message) {
-            this.message = message;
-        }
 
         public String getMessage() {
             return message;
