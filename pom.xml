@@ -9,9 +9,12 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>hellogatling</module>
+        <module>hellopact</module>
         <module>hellopitestbdd</module>
         <module>hellospringboot2</module>
         <module>hellospringcucumber</module>
-        <module>hellospringkafka</module>        
+        <module>hellospringkafka</module>
+        <module>helloconsul</module>
     </modules>
 </project>

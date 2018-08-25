@@ -12,7 +12,7 @@ class DemoController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ResponseEntity<SuperDto> call() {
-        return ResponseEntity.ok(new SuperDto("Hello"));
+        return ResponseEntity.ok(new SuperDto("Jag älskar Kaisa!"));
     }
 
 }

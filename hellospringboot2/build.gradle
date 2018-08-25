@@ -1,46 +1,53 @@
-apply plugin: 'java'
-apply plugin: 'maven'
-
 group = 'se.david'
 version = '0.0.1-SNAPSHOT'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-tasks.withType(JavaCompile) {
-	options.encoding = 'UTF-8'
-}
-
 buildscript {
-    ext{
-       springBootVersion = '2.0.0.RELEASE'
-    }
     repositories {
         mavenCentral()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
     }
-
     dependencies {
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE')
     }
 }
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
 }
 
-apply plugin: 'org.springframework.boot'
-
 dependencies {
-    compile(group: 'org.springframework.boot', name: 'spring-boot-starter', version:"${springBootVersion}")
-    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:"${springBootVersion}")
-    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version:"${springBootVersion}")
+    compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-webflux')
+    compile('com.h2database:h2')
+    compile('javax.xml.bind:jaxb-api:2.2.11')    // deps removed in jdk11
+    compile('com.sun.xml.bind:jaxb-core:2.2.11') // deps removed in jdk11
+    compile('com.sun.xml.bind:jaxb-impl:2.2.11') // deps removed in jdk11
+    compile('javax.activation:activation:1.1.1') // deps removed in jdk11
 
-    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:"${springBootVersion}")
-    testCompile group: 'io.rest-assured', name: 'rest-assured', version:'3.0.5'
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version:'5.0.0'
-    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.1.0')
+    testImplementation('org.junit.jupiter:junit-jupiter-api')
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine')
 }
 
 test {
     useJUnitPlatform()
+    testLogging {
+        showStandardStreams = false
+    }
 }

@@ -1,0 +1,4 @@
+rootProject.name = 'helloconsul'
+
+include 'discovery'
+include 'register'

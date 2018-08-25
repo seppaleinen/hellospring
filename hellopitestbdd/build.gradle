@@ -1,32 +1,37 @@
+group = 'se.david'
+version = '0.0.1-SNAPSHOT'
+
 buildscript {
     repositories {
         mavenCentral()
     }
-    configurations.maybeCreate("pitest")
+    configurations.maybeCreate('pitest')
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE")
-        classpath "info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.2.4"
-        pitest("com.github.alexvictoor:pitest-cucumber-plugin:0.4")
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE')
+        classpath('info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.2.4')
+        pitest('com.github.alexvictoor:pitest-cucumber-plugin:0.4')
     }
-}
-
-repositories {
-    mavenCentral()
 }
 
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
-apply plugin: "info.solidsoft.pitest"
+apply plugin: 'info.solidsoft.pitest'
 apply plugin: 'io.spring.dependency-management'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+}
 
 jar {
     baseName = 'pitest-cucumber'
     version =  '0.0.1'
 }
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 pitest {
     verbose = true
@@ -35,15 +40,20 @@ pitest {
     outputFormats = ['XML', 'HTML']
 }
 
-
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter")
-    compile("org.springframework.boot:spring-boot-starter-web")
-    testCompile("org.springframework.boot:spring-boot-starter-test")
-    testCompile("org.springframework.boot:spring-boot-test")
-    testCompile("org.pitest:pitest:1.2.0")
-    testCompile("junit:junit")
-    testCompile 'info.cukes:cucumber-java:1.2.5'
-    testCompile 'info.cukes:cucumber-junit:1.2.5'
-    testCompile 'info.cukes:cucumber-spring:1.2.5'
+    compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.boot:spring-boot-test')
+    testCompile('org.pitest:pitest:1.2.0')
+    testCompile('junit:junit')
+    testCompile('info.cukes:cucumber-java:1.2.5')
+    testCompile('info.cukes:cucumber-junit:1.2.5')
+    testCompile('info.cukes:cucumber-spring:1.2.5')
+}
+
+test {
+    testLogging {
+        showStandardStreams = false
+    }
 }
