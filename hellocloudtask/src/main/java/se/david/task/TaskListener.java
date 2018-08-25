@@ -14,8 +14,7 @@ public class TaskListener implements TaskExecutionListener {
     }
 
     @Override
-    public void onTaskFailed(TaskExecution arg0,
-                             Throwable arg1) {
+    public void onTaskFailed(TaskExecution arg0, Throwable arg1) {
         LOGGER.severe("Task Failed");
     }
 

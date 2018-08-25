@@ -7,6 +7,7 @@ import cucumber.api.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Method;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.ValidatableResponse;
 import org.hamcrest.CoreMatchers;
 import org.junit.Ignore;
@@ -57,6 +58,6 @@ public class SpringBootdefs {
 
     @Then("^result should contain \"(.*)\"$")
     public void checkResultBody(String expectedBody) {
-        response.body(CoreMatchers.containsString(expectedBody));
+        response.body("", CoreMatchers.equalTo(new JsonPath(expectedBody).getMap("")));
     }
 }

@@ -27,7 +27,7 @@ public class JobConfiguration {
 
     @Bean
     public Step step1() {
-        return this.stepBuilderFactory.get("job1step1")
+        return stepBuilderFactory.get("job1step1")
                 .tasklet((contribution, chunkContext) -> {
                     LOGGER.info("Tasklet has run");
                     return RepeatStatus.FINISHED;
@@ -37,8 +37,7 @@ public class JobConfiguration {
 
     @Bean
     public Step step2() {
-        return this.stepBuilderFactory
-                .get("job1step2")
+        return stepBuilderFactory.get("job1step2")
                 .<String, String>chunk(3)
                 .reader(new ListItemReader<>(Arrays.asList("7", "2", "3", "10", "5", "6")))
                 .processor((ItemProcessor<String, String>) item -> {
@@ -51,7 +50,7 @@ public class JobConfiguration {
 
     @Bean
     public Job job1() {
-        return this.jobBuilderFactory.get("job1")
+        return jobBuilderFactory.get("job1")
                 .start(step1())
                 .next(step2())
                 .build();

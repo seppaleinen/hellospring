@@ -19,3 +19,4 @@ mvn clean install
 
 * Batch DB Integration
 * Make server shut down after run
+* Access JobConfiguration through API
