@@ -1,5 +1,7 @@
 package se.david.labs;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Nested;
@@ -13,20 +15,28 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import se.david.labs.dto.SuperDto;
+import se.david.labs.repository.NewEntityRepository;
+import se.david.labs.repository.entity.NewEntity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ExtendWith(SpringExtension.class)
 @DisplayName("Testing out WebTestClient")
-class NestedIntegrationTest {
+public class NestedIntegrationTest {
     @Autowired
     private WebTestClient webClient;
+    @Autowired
+    private NewEntityRepository repository;
+
+    @BeforeEach
+    public  void beforeEach() {
+        repository.deleteAll();
+    }
 
     @Nested
     @DisplayName("Trying out testfactory")
@@ -38,7 +48,7 @@ class NestedIntegrationTest {
                             webClient.get().uri("/")
                                 .exchange()
                                 .expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8)
-                                .expectBody(SuperDto.class).isEqualTo(new SuperDto("Hello"))
+                                .expectBody(SuperDto.class).isEqualTo(new SuperDto("Jag älskar Kaisa!"))
                     )
             );
         }
@@ -61,13 +71,45 @@ class NestedIntegrationTest {
     class DjKhaled {
         @Test
         @DisplayName("Don't ever play yoself")
-        void dontEverPlayYourself() {}
+        void dontEverPlayYourself() {
+            webClient.post().uri("/reactive/20")
+                    .exchange()
+                    .expectStatus().isOk()
+                    .expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8)
+                    .expectBodyList(NewEntity.class)
+                        .hasSize(20)
+                        .contains(new NewEntity(0L), new NewEntity(19L))
+                        .doesNotContain(new NewEntity(20L));
+        }
         @Test
         @DisplayName("Who U love?")
-        void whoYouLove() {}
+        void whoYouLove() {
+            webClient.post().uri("/reactive/2")
+                    .exchange()
+                    .expectStatus().isOk();
+
+            webClient.get().uri("/reactive/1")
+                    .exchange()
+                    .expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8)
+                    .expectBody(NewEntity.class).isEqualTo(new NewEntity(1L));
+
+        }
         @Test
         @DisplayName("Who yo friends love?")
-        void WhoYourFriendsLove() {}
+        void WhoYourFriendsLove() {
+            webClient.post().uri("/reactive/20")
+                    .exchange()
+                    .expectStatus().isOk();
+
+            webClient.get().uri("/reactive")
+                    .exchange()
+                    .expectStatus().isOk()
+                    .expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8)
+                    .expectBodyList(NewEntity.class)
+                        .hasSize(20)
+                        .contains(new NewEntity(0L), new NewEntity(19L))
+                        .doesNotContain(new NewEntity(20L));
+        }
         @Test
         @DisplayName("Baby U smart")
         void babyYouSmart() {}
