@@ -19,11 +19,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static io.restassured.RestAssured.given;
 
+@RunWith(SpringRunner.class)
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = Application.class
 )
 @ContextConfiguration(loader = SpringBootContextLoader.class)
+@Ignore("Let CucumberRunnerTest run test")
 public class SpringBootdefs {
     @LocalServerPort
     private int port;
