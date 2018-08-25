@@ -20,3 +20,8 @@ mvn clean install
 * Batch DB Integration
 * Make server shut down after run
 * Access JobConfiguration through API
+
+### Docs
+
+* https://docs.spring.io/spring-cloud-task/docs/2.0.0.RELEASE/reference/htmlsingle/#getting-started
+* https://www.baeldung.com/spring-cloud-task
