@@ -8,11 +8,11 @@ gradle clean build
 
 # To build and run tests
 mvn clean install
-
 ```
 
 ### TODO
 * @EventListener
+* Receive list of objects from http client
 * "The following annotation processors were detected on the compile classpath:  
     'io.micronaut.annotation.processing.TypeElementVisitorProcessor' and   
     'io.micronaut.annotation.processing.PackageConfigurationInjectProcessor' and  
