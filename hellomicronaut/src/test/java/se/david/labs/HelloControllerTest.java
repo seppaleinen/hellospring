@@ -19,8 +19,7 @@ public class HelloControllerTest {
     @BeforeClass
     public static void setupServer() {
         server = ApplicationContext.run(EmbeddedServer.class);
-        client = server.getApplicationContext()
-                .createBean(HttpClient.class, server.getURL());
+        client = HttpClient.create(server.getURL());
     }
 
     @AfterClass
