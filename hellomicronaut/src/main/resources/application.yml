@@ -1,3 +1,5 @@
 micronaut:
   application:
     name: hellimicronaut
+  server:
+    port: 9876
