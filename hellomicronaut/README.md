@@ -12,7 +12,6 @@ mvn clean install
 ```
 
 ### TODO
-* Fix on jdk9 & 10
 * DB integration
 * @EventListener
 * "The following annotation processors were detected on the compile classpath:  
