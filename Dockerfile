@@ -8,7 +8,7 @@ RUN ./gradlew --version
 
 ADD . .
 
-RUN ./gradlew clean build
+RUN ./gradlew clean build --stacktrace
 
 
 FROM openjdk:11-jdk-slim
