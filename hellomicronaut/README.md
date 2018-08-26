@@ -12,7 +12,6 @@ mvn clean install
 ```
 
 ### TODO
-* DB integration
 * @EventListener
 * "The following annotation processors were detected on the compile classpath:  
     'io.micronaut.annotation.processing.TypeElementVisitorProcessor' and   
