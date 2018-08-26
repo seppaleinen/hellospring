@@ -45,6 +45,7 @@ dependencies {
     compile('io.micronaut:http-server-netty')
     compile('io.micronaut:inject')
     compile('io.micronaut:runtime')
+    compile('io.micronaut:management')
     compileOnly('io.micronaut:inject-java')
     runtime('ch.qos.logback:logback-classic:1.2.3')
 
@@ -64,6 +65,6 @@ compileTestJava.options.compilerArgs += '-parameters'
 
 test {
     testLogging {
-        showStandardStreams = false
+        showStandardStreams = true
     }
 }
