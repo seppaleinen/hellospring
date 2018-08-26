@@ -16,10 +16,12 @@ buildscript {
 }
 
 apply plugin: 'io.spring.dependency-management'
-apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'application'
 apply plugin: 'java'
 apply plugin: 'maven'
+
+mainClassName = 'se.david.labs.Application'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -55,7 +57,6 @@ shadowJar {
     mergeServiceFiles()
 }
 
-mainClassName = 'se.david.labs.Application'
 run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1')
 
 compileJava.options.compilerArgs += '-parameters'
