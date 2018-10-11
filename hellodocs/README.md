@@ -5,7 +5,7 @@
 * Swagger Documentation 
   - http://localhost:8080/swagger-ui.html
 * Spring Rest Docs
-  - http://localhost:8080/something-else
+  - http://localhost:8080/docs/index.html
 
 ### Commands 
 ```bash

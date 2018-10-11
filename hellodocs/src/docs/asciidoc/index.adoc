@@ -1,8 +1,11 @@
-= Spring REST Docs REST Assured Sample
-David Eriksson;
+= Spring REST Docs Example
+;
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
 
 This is just a simple example of how to use spring-rest-docs.
 

@@ -78,7 +78,7 @@ asciidoctor {
 task copyRestDocs(type: Copy) {
     dependsOn asciidoctor
     from "${asciidoctor.outputDir}/html5"
-    into "${sourceSets.main.output.resourcesDir}/static/docs"
+    into "${sourceSets.main.output.resourcesDir}/public/docs"
 }
 
 // Spring Rest Docs
