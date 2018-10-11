@@ -1,0 +1,26 @@
+= Spring REST Docs REST Assured Sample
+David Eriksson;
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+
+This is just a simple example of how to use spring-rest-docs.
+
+
+include::{snippets}/spring-rest-docs/curl-request.adoc[]
+
+One showing the HTTP request:
+
+include::{snippets}/spring-rest-docs/http-request.adoc[]
+
+And one showing the HTTP response:
+
+include::{snippets}/spring-rest-docs/http-response.adoc[]
+
+Request fields:
+
+include::{snippets}/spring-rest-docs/request-fields.adoc[]
+
+Response fields:
+
+include::{snippets}/spring-rest-docs/response-fields.adoc[]
