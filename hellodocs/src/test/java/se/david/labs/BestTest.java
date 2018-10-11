@@ -6,7 +6,6 @@ import io.restassured.specification.RequestSpecification;
 import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootContextLoader;
@@ -15,11 +14,13 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.restdocs.ManualRestDocumentation;
 import org.springframework.restdocs.restassured3.RestAssuredRestDocumentation;
+import org.springframework.restdocs.restassured3.operation.preprocess.RestAssuredPreprocessors;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.nio.charset.StandardCharsets;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
@@ -37,8 +38,13 @@ public class BestTest {
     @Before
     public void before() {
         RestAssured.port = port;
+
         documentationSpec = new RequestSpecBuilder()
-                .addFilter(RestAssuredRestDocumentation.documentationConfiguration(restDocumentation))
+                .addFilter(RestAssuredRestDocumentation.documentationConfiguration(restDocumentation)
+                        .operationPreprocessors()
+                        .withRequestDefaults(RestAssuredPreprocessors.modifyUris().host("localhost").port(8080))
+                        .and()
+                        .snippets().withEncoding(StandardCharsets.UTF_8.displayName()))
                 .build();
     }
 

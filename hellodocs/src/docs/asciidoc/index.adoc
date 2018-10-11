@@ -7,23 +7,49 @@
 :toclevels: 4
 :sectlinks:
 
+[[overview]]
+== Overview
+
 This is just a simple example of how to use spring-rest-docs.
 
+=== Http Status Codes
 
+These are how the status codes will be used in this application.
+
+|===
+| Status code | Usage
+
+| `200 OK`
+| The request completed successfully, and Agresso format XML will be returned in response.
+
+| `400 Bad Request`
+| Input data is incorrect, usually validation errors.
+  Correct and resend.
+
+| `500 Internal Server Error`
+| Something went wrong in server
+|===
+
+[[endpoints]]
+== Endpoints
+
+Here all the defined endpoints will be.
+
+[[endpoints-superendpoint]]
+=== spring-rest-docs/spring Endpoint
+This is the amaxing spring-rest-docs endpoint!
+
+==== Show curl example on calling service
 include::{snippets}/spring-rest-docs/curl-request.adoc[]
 
-One showing the HTTP request:
-
+==== One showing the HTTP request
 include::{snippets}/spring-rest-docs/http-request.adoc[]
 
-And one showing the HTTP response:
-
+==== And one showing the HTTP response
 include::{snippets}/spring-rest-docs/http-response.adoc[]
 
-Request fields:
-
+==== Request Fields
 include::{snippets}/spring-rest-docs/request-fields.adoc[]
 
-Response fields:
-
+==== Response Fields
 include::{snippets}/spring-rest-docs/response-fields.adoc[]

@@ -43,8 +43,8 @@ dependencies {
     testCompile('io.rest-assured:rest-assured:3.0.5')
     testCompile('org.awaitility:awaitility:3.0.0')
     testCompile('junit:junit:4.12')
-    testCompile('org.springframework.restdocs:spring-restdocs-restassured:2.0.2.RELEASE')
-    asciidoctor "org.springframework.restdocs:spring-restdocs-asciidoctor:2.0.2.RELEASE"
+    testCompile('org.springframework.restdocs:spring-restdocs-restassured:2.0.0.RELEASE')
+    asciidoctor "org.springframework.restdocs:spring-restdocs-asciidoctor:2.0.0.RELEASE"
 }
 
 // Spring Rest Docs
