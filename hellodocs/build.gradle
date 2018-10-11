@@ -3,14 +3,8 @@ version = '0.0.1-SNAPSHOT'
 
 buildscript {
     repositories {
+        jcenter()
         mavenCentral()
-        maven {
-            credentials {
-                username nexusUsername
-                password nexusPassword
-            }
-            url 'https://nexus.qa.vuitonline.com/repository/online-gradle-build'
-        }
     }
     dependencies {
         classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE'
