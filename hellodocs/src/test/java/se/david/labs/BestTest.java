@@ -51,7 +51,7 @@ public class BestTest {
     public void testSwaggerEndpoint() {
         RequestResponse response = given().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .body(new RequestResponse("hiya"))
-                .when().get("/swagger")
+                .when().get("/swagger/swag")
                 .then().statusCode(HttpStatus.OK.value())
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .extract().body().as(RequestResponse.class);
@@ -71,7 +71,7 @@ public class BestTest {
                                 fieldWithPath("message").description("Message from request being reused in response"))))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .body(new RequestResponse("hiya"))
-                .when().get("/spring-rest-docs")
+                .when().get("/spring-rest-docs/spring")
                 .then().statusCode(HttpStatus.OK.value())
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .body("message", CoreMatchers.equalTo("hiya"));

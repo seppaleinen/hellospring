@@ -63,12 +63,25 @@ test {
 asciidoctor {
     inputs.dir snippetsDir
     dependsOn test
+    outputDir 'build/asciidoc'
+    attributes[
+            'toc=left',
+            'source-highlighter=highlightjs',
+            'toc-title=Table of Contents'
+    ]
+    attributes 'snippets': snippetsDir
+
+    sourceDir 'src/docs/asciidoc'
+}
+
+// Spring Rest Docs
+task copyRestDocs(type: Copy) {
+    dependsOn asciidoctor
+    from "${asciidoctor.outputDir}/html5"
+    into "${sourceSets.main.output.resourcesDir}/static/docs"
 }
 
 // Spring Rest Docs
 bootJar {
-    dependsOn asciidoctor
-    from ("${asciidoctor.outputDir}/html5") {
-        into 'static/docs'
-    }
+    dependsOn copyRestDocs
 }
