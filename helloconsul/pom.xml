@@ -15,7 +15,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>discovery</module>
-        <module>register</module>
+        <module>consul-discovery</module>
+        <module>consul-register</module>
+        <module>ribbon-discovery</module>
     </modules>
 </project>

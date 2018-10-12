@@ -1,8 +1,9 @@
 rootProject.name = 'hellospring'
 
 include 'helloconsul'
-include 'helloconsul:discovery'
-include 'helloconsul:register'
+include 'helloconsul:consul-discovery'
+include 'helloconsul:consul-register'
+include 'helloconsul:ribbon-discovery'
 include 'hellodocs'
 include 'hellogatling'
 // Not working now in jdk9+

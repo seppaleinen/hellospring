@@ -1,4 +1,5 @@
 rootProject.name = 'helloconsul'
 
-include 'discovery'
-include 'register'
+include 'consul-discovery'
+include 'consul-register'
+include 'ribbon-discovery'
