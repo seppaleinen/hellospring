@@ -35,17 +35,17 @@ These are how the status codes will be used in this application.
 
 Here all the defined endpoints will be.
 
-[[endpoints-superendpoint]]
-=== spring-rest-docs/spring Endpoint
-This is the amaxing spring-rest-docs endpoint!
+[[endpoints-spring-rest-docs]]
+=== spring-rest-docs
+This is the amazing spring-rest-docs endpoint!
 
-==== Show curl example on calling service
+==== Show curl example for calling service
 include::{snippets}/spring-rest-docs/curl-request.adoc[]
 
-==== One showing the HTTP request
+==== HTTP Request Example
 include::{snippets}/spring-rest-docs/http-request.adoc[]
 
-==== And one showing the HTTP response
+==== HTTP Response Example
 include::{snippets}/spring-rest-docs/http-response.adoc[]
 
 ==== Request Fields
