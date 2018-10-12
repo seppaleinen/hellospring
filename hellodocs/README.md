@@ -47,7 +47,7 @@ java -jar build/libs/*.jar
 ## Examples
 
 #### Swagger
-![Swagger](swagger-example.png)
+![Swagger](swagger-example.PNG)
 
 #### Spring Rest Docs
-![Swagger](spring-rest-docs-example.png)
+![Swagger](spring-rest-docs-example.PNG)
