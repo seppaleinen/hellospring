@@ -21,22 +21,6 @@
         <artifactFinalName>${project.artifactId}</artifactFinalName>
     </properties>
 
-    <!--
-    <repositories>
-        <repository>
-            <id>jcenter</id>
-            <url>https://jcenter.bintray.com/</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>jcenter</id>
-            <url>https://jcenter.bintray.com/</url>
-        </pluginRepository>
-    </pluginRepositories>
-
--->
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -74,12 +58,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.awaitility</groupId>
-            <artifactId>awaitility</artifactId>
-            <version>3.0.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
@@ -113,14 +91,11 @@
                 </configuration>
             </plugin>
             <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.0.1</version>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.19.1</version>
             </plugin>
+            <!-- Convert adoc into html -->
             <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
@@ -137,7 +112,7 @@
                             <doctype>book</doctype>
                             <sourceDirectory>${basedir}/src/docs/asciidoc</sourceDirectory>
                             <attributes>
-                                <snippets>${basedir}/build/generated-snippets</snippets>
+                                <snippets>${project.build.directory}/generated-snippets</snippets>
                             </attributes>
                         </configuration>
                     </execution>
@@ -149,6 +124,32 @@
                         <version>2.0.0.RELEASE</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <!-- Copy generated index.html file to /public/docs folder -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.outputDirectory}/public/docs
+                            </outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>
+                                        ${project.build.directory}/generated-docs
+                                    </directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
