@@ -74,7 +74,7 @@ public class ConsulIntegrationTest {
                             .withBody("{\"status\": \"UP\"}"))
             );
 
-            String expected = "HTTP GET http://localhost:9999/health: 200 OK";
+            String expected = "HTTP GET http://localhost:9998/health: 200 OK";
             await().pollInterval(50L, TimeUnit.MILLISECONDS)
                     .atMost(5L, TimeUnit.SECONDS).until(() -> given()
                     .get(String.format("http://localhost:%s/v1/health/state/passing", CONSUL.getHttpPort()))

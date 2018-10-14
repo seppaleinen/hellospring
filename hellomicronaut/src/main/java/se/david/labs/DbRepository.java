@@ -13,7 +13,7 @@ import java.util.List;
 @Singleton
 public class DbRepository {
     @PersistenceContext
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Inject
     public DbRepository(@CurrentSession EntityManager entityManager) {

@@ -32,7 +32,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 public class BestTest {
     @LocalServerPort
     private int port;
-    private ManualRestDocumentation restDocumentation = new ManualRestDocumentation("build/generated-snippets");
+    private static final ManualRestDocumentation REST_DOCUMENTATION = new ManualRestDocumentation("build/generated-snippets");
     private RequestSpecification documentationSpec;
 
     @Before
@@ -40,7 +40,7 @@ public class BestTest {
         RestAssured.port = port;
 
         documentationSpec = new RequestSpecBuilder()
-                .addFilter(RestAssuredRestDocumentation.documentationConfiguration(restDocumentation)
+                .addFilter(RestAssuredRestDocumentation.documentationConfiguration(REST_DOCUMENTATION)
                         .operationPreprocessors()
                         .withRequestDefaults(RestAssuredPreprocessors.modifyUris().host("localhost").port(8080))
                         .and()
@@ -50,7 +50,7 @@ public class BestTest {
 
     @After
     public void tearDown() {
-        this.restDocumentation.afterTest();
+        this.REST_DOCUMENTATION.afterTest();
     }
 
     @Test
@@ -67,7 +67,7 @@ public class BestTest {
 
     @Test
     public void testSpringRestDocsEndpoint() {
-        this.restDocumentation.beforeTest(getClass(), "spring-rest-docs");
+        this.REST_DOCUMENTATION.beforeTest(getClass(), "spring-rest-docs");
 
         given(documentationSpec)
                 .filter(RestAssuredRestDocumentation.document("spring-rest-docs",

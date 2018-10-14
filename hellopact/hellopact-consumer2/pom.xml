@@ -97,7 +97,7 @@
                                 <consumer>
                                     <name>hellopact-consumer2</name>
                                     <!--  currently supports a file path using pactFile or a URL using pactUrl -->
-                                    <pactFile>${project.build.dir}/pacts/hellopact-consumer2-hellopact-producer.json</pactFile>
+                                    <pactFile>${project.build.directory}/pacts/hellopact-consumer2-hellopact-producer.json</pactFile>
                                 </consumer>
                             </consumers>
                         </serviceProvider>

@@ -40,7 +40,7 @@ public class ConsumerIntegrationTest {
 
     @Rule
     public PactProviderRuleMk2 stubProvider =
-            new PactProviderRuleMk2("hellopact-producer", "localhost", 9998, this);
+            new PactProviderRuleMk2("hellopact-producer", "localhost", 9992, this);
 
     @Before
     public void beforeAll() {

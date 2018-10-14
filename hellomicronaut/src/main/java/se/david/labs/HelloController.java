@@ -9,7 +9,6 @@ import io.micronaut.http.annotation.QueryValue;
 
 import javax.inject.Inject;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller("/hello")
 public class HelloController {
