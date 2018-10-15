@@ -8,7 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>hellospringboot2</name>
+    <name>Root - Hello Spring Boot 2</name>
     <description>Testing out spring-boot 2</description>
 
     <parent>

@@ -8,6 +8,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <name>Root - Hellopact</name>
+
     <modules>
         <module>hellopact-consumer1</module>
         <module>hellopact-consumer2</module>

@@ -8,7 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>hellomicronaut</name>
+    <name>Root - Hello Micronaut</name>
     <description>Testing out hellomicronaut</description>
 
     <properties>

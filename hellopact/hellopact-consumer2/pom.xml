@@ -8,7 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>hellopact</name>
+    <name>Root - Hellopact - hellopact-consumer2</name>
     <description>Testing out pact</description>
 
     <parent>

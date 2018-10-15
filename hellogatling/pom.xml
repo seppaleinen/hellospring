@@ -8,7 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>hellogatling</name>
+    <name>Root - Hello Gatling</name>
     <description>Testing out gatling</description>
 
     <parent>
