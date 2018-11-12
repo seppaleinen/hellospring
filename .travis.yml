@@ -3,7 +3,7 @@ jdk:
   - oraclejdk8
   - oraclejdk9
   - oraclejdk10
-#  - oraclejdk11 Remove for now as spring is not really compatible with jdk11 until version 5.1
+  - oraclejdk11
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -15,6 +15,6 @@ cache:
 
 before_install:
   - chmod +x gradlew
-  - gradle assemble | grep -Ev '^Download'
+  - ./gradlew assemble | grep -Ev '^Download'
 script:
   - ./gradlew clean build | grep -Ev '^Download';
