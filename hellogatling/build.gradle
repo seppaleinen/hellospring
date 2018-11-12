@@ -10,7 +10,7 @@ buildscript {
     }
     dependencies {
         classpath(
-                'org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE',
+                'org.springframework.boot:spring-boot-gradle-plugin:2.1.0.RELEASE',
                 'gradle.plugin.com.github.lkishalmi.gatling:gradle-gatling-plugin:0.7.3',
                 'gradle.plugin.com.github.psxpaul:gradle-execfork-plugin:0.1.8'
         )

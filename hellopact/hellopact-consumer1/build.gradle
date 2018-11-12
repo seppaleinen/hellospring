@@ -9,7 +9,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE')
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.1.0.RELEASE')
         classpath("au.com.dius:pact-jvm-provider-gradle_2.12:${pactVersion}")
     }
 }
