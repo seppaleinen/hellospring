@@ -15,6 +15,5 @@ cache:
 
 before_install:
   - chmod +x gradlew
-  - ./gradlew assemble | grep -Ev '^Download'
 script:
   - ./gradlew clean build | grep -Ev '^Download';
