@@ -12,8 +12,8 @@
     <description>Testing out hellomicronaut</description>
 
     <properties>
-        <exec.mainClass>example.Application</exec.mainClass>
-        <micronaut.version>1.0.0.M4</micronaut.version>
+        <exec.mainClass>se.david.labs.Application</exec.mainClass>
+        <micronaut.version>1.0.0.RC2</micronaut.version>
         <jdk.version>1.8</jdk.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

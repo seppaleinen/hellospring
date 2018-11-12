@@ -30,12 +30,11 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    maven { url 'https://jcenter.bintray.com' }
 }
 
 dependencyManagement {
     imports {
-        mavenBom 'io.micronaut:bom:1.0.0.M4'
+        mavenBom 'io.micronaut:bom:1.0.0.RC2'
     }
 }
 
