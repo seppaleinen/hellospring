@@ -15,6 +15,7 @@
         <module>hellomicronaut</module>
         <module>hellopact</module>
         <module>hellopitestbdd</module>
+        <module>hellor2dbc</module>
         <module>hellospringboot2</module>
         <module>hellospringcucumber</module>
         <module>hellospringkafka</module>
