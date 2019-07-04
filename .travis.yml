@@ -1,7 +1,8 @@
 language: java
 jdk:
   - openjdk8
-  - openjdk9
+#  - openjdk9 does not seem to work as of now 2019-07-04
+  - oraclejdk9
   - openjdk10
   - openjdk11
 
