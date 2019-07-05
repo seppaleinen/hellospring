@@ -20,8 +20,6 @@ apply plugin: 'maven'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'org.springframework.boot'
 
-ext['netty.version'] = '4.0.51.Final' // Forcing spring-boots netty version to be compliant with gatling's
-
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -34,6 +32,11 @@ repositories {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter')
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile('io.r2dbc:r2dbc-h2:1.0.0.M7')
+    compile('org.springframework.boot:spring-boot-starter-webflux')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('com.h2database:h2')
+    compile('org.springframework.boot.experimental:spring-boot-starter-data-r2dbc:0.1.0.M1')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('io.rest-assured:rest-assured:3.0.5')
