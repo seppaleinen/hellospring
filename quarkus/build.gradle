@@ -1,0 +1,41 @@
+group = 'se.david'
+version = '0.0.1-SNAPSHOT'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "io.quarkus:quarkus-gradle-plugin:0.23.2"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'io.quarkus'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(enforcedPlatform('io.quarkus:quarkus-bom:0.23.2'))
+    implementation('io.quarkus:quarkus-resteasy')
+    implementation('io.quarkus:quarkus-agroal')
+    implementation('io.quarkus:quarkus-jdbc-h2')
+
+    testCompile('io.quarkus:quarkus-junit5:0.23.2')
+    testCompile('io.rest-assured:rest-assured:0.23.2')
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        showStandardStreams = false
+    }
+}
