@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>se.seppa</groupId>
-  <artifactId>quarkus</artifactId>
+  <artifactId>helloquarkus</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
   <name>Root - Hello Quarkus</name>
