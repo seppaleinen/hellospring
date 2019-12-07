@@ -1,4 +1,4 @@
-package se.david.neo4j;
+package se.david.neo4j.entity;
 
 import java.util.ArrayList;
 import java.util.List;

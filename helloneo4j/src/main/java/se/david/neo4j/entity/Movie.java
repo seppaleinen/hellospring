@@ -1,4 +1,4 @@
-package se.david.neo4j;
+package se.david.neo4j.entity;
 
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;

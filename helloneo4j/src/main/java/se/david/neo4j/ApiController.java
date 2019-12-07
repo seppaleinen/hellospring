@@ -25,7 +25,7 @@ public class ApiController {
     }
 
     @GetMapping("/graph")
-    public Map<String, Object> graph(@RequestParam(value = "limit",required = false, defaultValue = "100") Integer limit) {
+    public MovieService.D3Format graph(@RequestParam(value = "limit",required = false, defaultValue = "100") Integer limit) {
         return movieService.graph(limit);
     }
 
