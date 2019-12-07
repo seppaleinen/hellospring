@@ -1,6 +1,7 @@
 package se.david.neo4j.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -19,14 +20,16 @@ public class Person {
     private int born;
 
     @Relationship(type = "ACTED_IN")
+    @JsonIgnore
     private List<Movie> movies = new ArrayList<>();
 
     public Person() {
     }
 
-    public Person(String name, int born) {
+    public Person(String name, int born, Movie movie) {
         this.name = name;
         this.born = born;
+        this.movies.add(movie);
     }
 
     public Long getId() {

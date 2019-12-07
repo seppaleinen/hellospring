@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import se.david.neo4j.entity.Movie;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,8 +26,20 @@ public class ApiController {
         return ResponseEntity.ok("OK");
     }
 
-    @GetMapping("/graph")
-    public MovieService.D3Format graph(@RequestParam(value = "limit",required = false, defaultValue = "100") Integer limit) {
+    @GetMapping(path = "/movies/search/findByTitleLike", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<Movie> findByTitleLike(@RequestParam(value = "title") String title) {
+        return movieService.findByTitleLike(title);
+    }
+
+    @GetMapping(path = "/movies/search/findByTitle", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<Movie> findByTitle(@RequestParam(value = "title") String title) {
+        return movieService.findByTitle(title)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.noContent().build());
+    }
+
+    @GetMapping(path = "/graph", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Map<String, Object> graph(@RequestParam(value = "limit", required = false, defaultValue = "100") Integer limit) {
         return movieService.graph(limit);
     }
 

@@ -1,9 +1,14 @@
 package se.david.neo4j.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.neo4j.ogm.annotation.EndNode;
+import org.neo4j.ogm.annotation.GeneratedValue;
+import org.neo4j.ogm.annotation.Id;
+import org.neo4j.ogm.annotation.RelationshipEntity;
+import org.neo4j.ogm.annotation.StartNode;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.neo4j.ogm.annotation.*;
 
 @RelationshipEntity(type = "ACTED_IN")
 public class Role {
@@ -17,13 +22,15 @@ public class Role {
     private Person person;
 
     @EndNode
+    @JsonIgnore
     private Movie movie;
 
     public Role() {
     }
 
-    public Role(Movie movie, Person actor) {
+    public Role(Movie movie, String role, Person actor) {
         this.movie = movie;
+        this.roles.add(role);
         this.person = actor;
     }
 
@@ -41,12 +48,5 @@ public class Role {
 
     public Movie getMovie() {
         return movie;
-    }
-
-    public void addRoleName(String name) {
-        if (this.roles == null) {
-            this.roles = new ArrayList<>();
-        }
-        this.roles.add(name);
     }
 }

@@ -8,8 +8,10 @@ import se.david.neo4j.entity.Role;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class MovieService {
@@ -19,63 +21,49 @@ public class MovieService {
         this.movieRepository = movieRepository;
     }
 
-    private D3Format toD3Format(Collection<Movie> movies) {
-        List<Map<String, String>> nodes = new ArrayList<>();
-        List<Map<String, Integer>> rels = new ArrayList<>();
+
+    private Map<String, Object> toD3Format(Collection<Movie> movies) {
+        List<Map<String, Object>> nodes = new ArrayList<>();
+        List<Map<String, Object>> rels = new ArrayList<>();
         int i = 0;
-        for (Movie movie : movies) {
-            nodes.add(createNode(movie.getTitle(), "movie"));
+        Iterator<Movie> result = movies.iterator();
+        while (result.hasNext()) {
+            Movie movie = result.next();
+            nodes.add(map("title", movie.getTitle(), "label", "movie"));
             int target = i;
             i++;
             for (Role role : movie.getRoles()) {
-                Map<String, String> actor = createNode(role.getPerson().getName(), "actor");
-
+                Map<String, Object> actor = map("title", role.getPerson().getName(), "label", "actor");
                 int source = nodes.indexOf(actor);
-
                 if (source == -1) {
                     nodes.add(actor);
                     source = i++;
                 }
-
-                rels.add(createRel(source, target));
+                rels.add(map("source", source, "target", target));
             }
         }
-        return new D3Format(nodes, rels);
-    }
-
-    private Map<String, String> createNode(String title, String movie) {
-        HashMap<String, String> nodeEntry = new HashMap<>();
-        nodeEntry.put("title", title);
-        nodeEntry.put("label", movie);
-        return nodeEntry;
-    }
-
-    private Map<String, Integer> createRel(int source, int target) {
-        Map<String, Integer> relEntry = new HashMap<>();
-        relEntry.put("source", source);
-        relEntry.put("target", target);
-        return relEntry;
+        return map("nodes", nodes, "links", rels);
     }
 
     private Map<String, Object> map(String key1, Object value1, String key2, Object value2) {
-        Map<String, Object> result = new HashMap<>(2);
+        Map<String, Object> result = new HashMap<String, Object>(2);
         result.put(key1, value1);
         result.put(key2, value2);
         return result;
     }
 
     @Transactional(readOnly = true)
-    public Movie findByTitle(String title) {
-        return movieRepository.findByTitle(title);
+    public Optional<Movie> findByTitle(String title) {
+        return Optional.ofNullable(movieRepository.findByTitle(title));
     }
 
     @Transactional(readOnly = true)
-    public Collection<Movie> findByTitleLike(String title) {
+    public List<Movie> findByTitleLike(String title) {
         return movieRepository.findByTitleLike(title);
     }
 
     @Transactional(readOnly = true)
-    public D3Format graph(int limit) {
+    public Map<String, Object> graph(int limit) {
         Collection<Movie> result = movieRepository.graph(limit);
         return toD3Format(result);
     }

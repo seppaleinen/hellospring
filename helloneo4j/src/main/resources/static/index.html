@@ -90,11 +90,10 @@
                         $("#poster").attr("src","http://neo4j-contrib.github.io/developer-resources/language-guides/assets/posters/"+encodeURIComponent(movie.title)+".jpg");
                         var $list = $("#crew").empty();
                         movie.roles.forEach(function (cast) {
-                            $.get(cast._links.person.href, function(personData) {
-                                var person = personData.name;
-                                var job = cast.job || "acted";
-                                $list.append($("<li>" + person + " " +job + (job == "acted"?" as " + cast.roles.join(", ") : "") + "</li>"));
-                            });
+                            console.log(cast);
+                            var person = cast.person.name;
+                            var job = cast.job || "acted";
+                            $list.append($("<li>" + person + " " +job + (job == "acted"?" as " + cast.roles.join(", ") : "") + "</li>"));
                         });
                     }, "json");
             return false;
@@ -105,7 +104,7 @@
                     function (data) {
                         var t = $("table#results tbody").empty();
                         if (!data) return;
-                        data = data["_embedded"].movies;
+                        console.log(data);
                         data.forEach(function (movie) {
                             $("<tr><td class='movie'>" + movie.title + "</td><td>" + movie.released + "</td><td>" + movie.tagline + "</td></tr>").appendTo(t)
                                     .click(function() { showMovie($(this).find("td.movie").text());})
