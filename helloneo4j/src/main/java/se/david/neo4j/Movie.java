@@ -12,11 +12,8 @@ public class Movie {
     @Id
     @GeneratedValue
     private Long id;
-
     private String title;
-
     private int released;
-
     private String tagline;
 
     @Relationship(type = "ACTED_IN", direction = Relationship.INCOMING)
