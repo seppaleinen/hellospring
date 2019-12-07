@@ -9,5 +9,6 @@ services:
       NEO4J_AUTH: neo4j/password
   backend:
     image: seppaleinen/hello-neo4j
+    build: .
     ports:
       - "8080:8080"
