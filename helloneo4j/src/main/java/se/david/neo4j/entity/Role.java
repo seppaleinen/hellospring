@@ -49,4 +49,13 @@ public class Role {
     public Movie getMovie() {
         return movie;
     }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "roles=" + roles +
+                ", person=" + person +
+                ", movie=" + movie +
+                '}';
+    }
 }

@@ -1,4 +1,4 @@
-package se.david.neo4j;
+package se.david.neo4j.dto;
 
 public class Node {
     private String title;

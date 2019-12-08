@@ -48,4 +48,14 @@ public class Movie {
     public List<Role> getRoles() {
         return roles;
     }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "title='" + title + '\'' +
+                ", released=" + released +
+                ", tagline='" + tagline + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
 }

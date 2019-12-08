@@ -1,4 +1,4 @@
-package se.david.neo4j;
+package se.david.neo4j.dto;
 
 public class Rel {
     private Long source;

@@ -3,15 +3,18 @@ package se.david.neo4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import se.david.neo4j.dto.D3Format;
+import se.david.neo4j.dto.Node;
+import se.david.neo4j.dto.Rel;
 import se.david.neo4j.entity.Movie;
 import se.david.neo4j.entity.Role;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class MovieService {
@@ -19,16 +22,12 @@ public class MovieService {
     private MovieRepository movieRepository;
 
     private D3Format toD3Format(Collection<Movie> movies) {
-        List<Node> nodes = new ArrayList<>();
-        List<Rel> rels = new ArrayList<>();
+        Set<Node> nodes = new HashSet<>();
+        Set<Rel> rels = new HashSet<>();
         for (Movie movie : movies) {
             nodes.add(createNode(movie.getTitle(), "movie"));
             for (Role role : movie.getRoles()) {
-                Node actor = createNode(role.getPerson().getName(), "actor");
-                int source = nodes.indexOf(actor);
-                if (source == -1) {
-                    nodes.add(actor);
-                }
+                nodes.add(createNode(role.getPerson().getName(), "actor"));
                 rels.add(createRel(role.getPerson().getId(), movie.getId()));
             }
         }

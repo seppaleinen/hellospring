@@ -47,4 +47,13 @@ public class Person {
     public List<Movie> getMovies() {
         return movies;
     }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", born=" + born +
+                ", movies=" + movies +
+                '}';
+    }
 }

@@ -19,13 +19,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import se.david.neo4j.dto.D3Format;
 import se.david.neo4j.entity.Movie;
 import se.david.neo4j.entity.Person;
 import se.david.neo4j.entity.Role;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.given;
@@ -59,11 +59,6 @@ public class IntegrationTest {
     public void setup() {
         RestAssured.port = port;
         movieRepository.deleteAll();
-    }
-
-    @Ignore
-    @Test
-    public void findByTitle() {
         Movie matrix = new Movie("The Matrix", 1999, "Welcome to the Real World");
         List<Role> roles = Arrays.asList(
                 new Role(matrix, "Neo", new Person("Keanu Reeves", 1964, matrix)),
@@ -74,80 +69,61 @@ public class IntegrationTest {
         );
         matrix.getRoles().addAll(roles);
         movieRepository.save(matrix);
+    }
 
-        Response response = given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).
-                when().get("/movies/search/findByTitle?title=" + "The%20Matrix")
+    @Test
+    public void findByTitle() {
+        Response response = given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .when().get("/movies/search/findByTitle?title=The Matrix")
                 .thenReturn();
 
         assertEquals(HttpStatus.OK.value(), response.getStatusCode());
         Movie movie = response.getBody().as(Movie.class);
         assertEquals("The Matrix", movie.getTitle());
-        assertEquals(4, movie.getRoles().size());
+        assertEquals(movie.getRoles().toString(),10, movie.getRoles().size());
     }
 
     @Test
     public void findByTitleMustHaveValue() {
         Stream.of("", "?title=")
-                .map(a -> given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).
-                        when().get("/movies/search/findByTitle").then())
+                .map(a -> given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .when().get("/movies/search/findByTitle").then())
                 .forEach(resp -> resp.statusCode(HttpStatus.BAD_REQUEST.value()));
     }
 
     @Test
     public void findByTitleLike() {
-        Movie matrix = new Movie("The Matrix", 1999, "Welcome to the Real World");
-        List<Role> roles = Arrays.asList(
-                new Role(matrix, "Neo", new Person("Keanu Reeves", 1964, matrix)),
-                new Role(matrix, "Trinity", new Person("Carrie-Anne Moss", 1967, matrix)),
-                new Role(matrix, "Morpheus", new Person("Laurence Fishburne", 1967, matrix)),
-                new Role(matrix, "Agent Smith", new Person("Hugo Weaving", 1967, matrix))
-        );
-        matrix.getRoles().addAll(roles);
-        movieRepository.save(matrix);
-
-
-        Response response = given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).
-                when().get("/movies/search/findByTitleLike?title=*Matrix*")
+        Response response = given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .when().get("/movies/search/findByTitleLike?title=*Matrix*")
                 .thenReturn();
 
         assertEquals(HttpStatus.OK.value(), response.getStatusCode());
         List<Movie> movies = Arrays.asList(response.getBody().as(Movie[].class));
         assertEquals(1, movies.size());
         assertEquals("The Matrix", movies.get(0).getTitle());
-        assertEquals(4, movies.get(0).getRoles().size());
+        assertEquals(5, movies.get(0).getRoles().size());
     }
 
     @Test
     public void findByTitleLikeMustHaveValue() {
         Stream.of("", "?title=")
-                .map(a -> given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).
-                        when().get("/movies/search/findByTitleLike").then())
+                .map(a -> given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .when().get("/movies/search/findByTitleLike").then())
                 .forEach(resp -> resp.statusCode(HttpStatus.BAD_REQUEST.value()));
     }
 
     @Test
     public void graph() {
-        Movie matrix = new Movie("The Matrix", 1999, "Welcome to the Real World");
-        List<Role> roles = Arrays.asList(
-                new Role(matrix, "Neo", new Person("Keanu Reeves", 1964, matrix)),
-                new Role(matrix, "Trinity", new Person("Carrie-Anne Moss", 1967, matrix)),
-                new Role(matrix, "Morpheus", new Person("Laurence Fishburne", 1967, matrix)),
-                new Role(matrix, "Agent Smith", new Person("Hugo Weaving", 1967, matrix))
-        );
-        matrix.getRoles().addAll(roles);
-        movieRepository.save(matrix);
-
-
         Response response = given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).
                 when().get("/graph")
                 .thenReturn();
 
         assertEquals(HttpStatus.OK.value(), response.statusCode());
         D3Format d3FormatResponse = response.getBody().as(D3Format.class);
-        assertEquals(5, d3FormatResponse.getNodes().size());
+        assertEquals(6, d3FormatResponse.getNodes().size());
         assertEquals(1, d3FormatResponse.getNodes().stream().filter(node -> node.getLabel().equals("movie")).count());
 
-        assertEquals(4, d3FormatResponse.getRels().size());
-        assertEquals(4, d3FormatResponse.getNodes().stream().filter(node -> node.getLabel().equals("actor")).count());
+        assertEquals(5, d3FormatResponse.getRels().size());
+        assertEquals(5, d3FormatResponse.getNodes().stream().filter(node -> node.getLabel().equals("actor")).count());
     }
 }
