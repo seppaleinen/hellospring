@@ -145,9 +145,9 @@ public class IntegrationTest {
         assertEquals(HttpStatus.OK.value(), response.statusCode());
         D3Format d3FormatResponse = response.getBody().as(D3Format.class);
         assertEquals(5, d3FormatResponse.getNodes().size());
-        assertEquals(1, d3FormatResponse.getNodes().stream().filter(node -> node.get("label").equals("movie")).count());
+        assertEquals(1, d3FormatResponse.getNodes().stream().filter(node -> node.getLabel().equals("movie")).count());
 
         assertEquals(4, d3FormatResponse.getRels().size());
-        assertEquals(4, d3FormatResponse.getNodes().stream().filter(node -> node.get("label").equals("actor")).count());
+        assertEquals(4, d3FormatResponse.getNodes().stream().filter(node -> node.getLabel().equals("actor")).count());
     }
 }

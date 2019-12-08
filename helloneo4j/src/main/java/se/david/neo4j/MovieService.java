@@ -19,12 +19,12 @@ public class MovieService {
     private MovieRepository movieRepository;
 
     private D3Format toD3Format(Collection<Movie> movies) {
-        List<Map<String, String>> nodes = new ArrayList<>();
-        List<Map<String, Long>> rels = new ArrayList<>();
+        List<Node> nodes = new ArrayList<>();
+        List<Rel> rels = new ArrayList<>();
         for (Movie movie : movies) {
             nodes.add(createNode(movie.getTitle(), "movie"));
             for (Role role : movie.getRoles()) {
-                Map<String, String> actor = createNode(role.getPerson().getName(), "actor");
+                Node actor = createNode(role.getPerson().getName(), "actor");
                 int source = nodes.indexOf(actor);
                 if (source == -1) {
                     nodes.add(actor);
@@ -35,18 +35,12 @@ public class MovieService {
         return new D3Format(nodes, rels);
     }
 
-    private Map<String, Long> createRel(Long source, Long target) {
-        Map<String, Long> result = new HashMap<>(2);
-        result.put("source", source);
-        result.put("target", target);
-        return result;
+    private Rel createRel(Long source, Long target) {
+        return new Rel(source, target);
     }
 
-    private Map<String, String> createNode(String title, String label) {
-        Map<String, String> result = new HashMap<>(2);
-        result.put("title", title);
-        result.put("label", label);
-        return result;
+    private Node createNode(String title, String label) {
+        return new Node(title, label);
     }
 
     @Transactional(readOnly = true)
