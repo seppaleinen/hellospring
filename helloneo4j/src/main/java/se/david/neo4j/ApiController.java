@@ -3,6 +3,7 @@ package se.david.neo4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +29,7 @@ public class ApiController {
 
     @GetMapping(path = "/movies/search/findByTitleLike", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<Movie> findByTitleLike(@RequestParam(value = "title") String title) {
-        return movieService.findByTitleLike(title);
+        return movieService.findByTitleLike(String.format("*%s*", title));
     }
 
     @GetMapping(path = "/movies/search/findByTitle", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -39,7 +40,7 @@ public class ApiController {
     }
 
     @GetMapping(path = "/graph", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Map<String, Object> graph(@RequestParam(value = "limit", required = false, defaultValue = "100") Integer limit) {
+    public D3Format graph(@RequestParam(value = "limit", required = false, defaultValue = "100") Integer limit) {
         return movieService.graph(limit);
     }
 

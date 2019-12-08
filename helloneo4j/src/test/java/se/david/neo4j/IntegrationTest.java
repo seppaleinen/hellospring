@@ -23,10 +23,10 @@ import se.david.neo4j.entity.Movie;
 import se.david.neo4j.entity.Person;
 import se.david.neo4j.entity.Role;
 
-import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
@@ -83,7 +83,14 @@ public class IntegrationTest {
         Movie movie = response.getBody().as(Movie.class);
         assertEquals("The Matrix", movie.getTitle());
         assertEquals(4, movie.getRoles().size());
+    }
 
+    @Test
+    public void findByTitleMustHaveValue() {
+        Stream.of("", "?title=")
+                .map(a -> given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).
+                        when().get("/movies/search/findByTitle").then())
+                .forEach(resp -> resp.statusCode(HttpStatus.BAD_REQUEST.value()));
     }
 
     @Test
@@ -111,6 +118,14 @@ public class IntegrationTest {
     }
 
     @Test
+    public void findByTitleLikeMustHaveValue() {
+        Stream.of("", "?title=")
+                .map(a -> given().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).
+                        when().get("/movies/search/findByTitleLike").then())
+                .forEach(resp -> resp.statusCode(HttpStatus.BAD_REQUEST.value()));
+    }
+
+    @Test
     public void graph() {
         Movie matrix = new Movie("The Matrix", 1999, "Welcome to the Real World");
         List<Role> roles = Arrays.asList(
@@ -128,7 +143,11 @@ public class IntegrationTest {
                 .thenReturn();
 
         assertEquals(HttpStatus.OK.value(), response.statusCode());
-        Map<String, Object> map = response.getBody().as(Map.class);
-        assertEquals(2, map.size());
+        D3Format d3FormatResponse = response.getBody().as(D3Format.class);
+        assertEquals(5, d3FormatResponse.getNodes().size());
+        assertEquals(1, d3FormatResponse.getNodes().stream().filter(node -> node.get("label").equals("movie")).count());
+
+        assertEquals(4, d3FormatResponse.getRels().size());
+        assertEquals(4, d3FormatResponse.getNodes().stream().filter(node -> node.get("label").equals("actor")).count());
     }
 }
