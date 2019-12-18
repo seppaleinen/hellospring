@@ -13,6 +13,7 @@
         <module>helloconsul</module>
         <module>hellogatling</module>
         <module>hellomicronaut</module>
+        <module>helloneo4j</module>
         <module>hellopact</module>
         <module>hellopitestbdd</module>
         <module>hellospringboot2</module>
