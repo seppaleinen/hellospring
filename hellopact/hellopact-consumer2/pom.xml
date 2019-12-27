@@ -8,13 +8,13 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>hellopact</name>
+    <name>Root - Hellopact - hellopact-consumer2</name>
     <description>Testing out pact</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.0.RELEASE</version>
+        <version>2.1.0.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -38,6 +38,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.skyscreamer</groupId>
+                    <artifactId>jsonassert</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -48,7 +54,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-contract-wiremock</artifactId>
-            <version>1.2.1.RELEASE</version>
+            <version>2.0.2.RELEASE</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -97,7 +103,7 @@
                                 <consumer>
                                     <name>hellopact-consumer2</name>
                                     <!--  currently supports a file path using pactFile or a URL using pactUrl -->
-                                    <pactFile>${project.build.dir}/pacts/hellopact-consumer2-hellopact-producer.json</pactFile>
+                                    <pactFile>${project.build.directory}/pacts/hellopact-consumer2-hellopact-producer.json</pactFile>
                                 </consumer>
                             </consumers>
                         </serviceProvider>

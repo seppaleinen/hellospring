@@ -91,22 +91,6 @@ public class NestedIntegrationTest {
 
         }
         @Test
-        @DisplayName("Who yo friends love?")
-        void WhoYourFriendsLove() {
-            webClient.post().uri("/reactive/20")
-                    .exchange()
-                    .expectStatus().isOk();
-
-            webClient.get().uri("/reactive")
-                    .exchange()
-                    .expectStatus().isOk()
-                    .expectHeader().contentType(MediaType.APPLICATION_JSON_UTF8)
-                    .expectBodyList(NewEntity.class)
-                        .hasSize(20)
-                        .contains(new NewEntity(0L), new NewEntity(19L))
-                        .doesNotContain(new NewEntity(20L));
-        }
-        @Test
         @DisplayName("Baby U smart")
         void babyYouSmart() {
             webClient.get().uri("/health")

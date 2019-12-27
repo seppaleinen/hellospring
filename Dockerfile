@@ -8,7 +8,7 @@ RUN ./gradlew --version
 
 ADD . .
 
-RUN ./gradlew clean build
+RUN ./gradlew clean build | grep -Ev '^Download'
 
 
 FROM openjdk:11-jdk-slim
@@ -20,4 +20,4 @@ RUN ./gradlew --version
 
 ADD . .
 
-RUN ./gradlew clean build
+RUN ./gradlew clean build | grep -Ev '^Download'

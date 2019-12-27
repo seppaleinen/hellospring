@@ -1,9 +1,10 @@
 language: java
 jdk:
-  - oraclejdk8
+  - openjdk8
+#  - openjdk9 does not seem to work as of now 2019-07-04
   - oraclejdk9
-  - oraclejdk10
-#  - oraclejdk11 Remove for now as spring is not really compatible with jdk11 until version 5.1
+  - openjdk10
+  - openjdk11
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -16,4 +17,4 @@ cache:
 before_install:
   - chmod +x gradlew
 script:
-  - ./gradlew clean build;
+  - ./gradlew clean build | grep -Ev '^Download';

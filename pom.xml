@@ -4,17 +4,21 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>se.david</groupId>
-    <artifactId>root</artifactId>
+    <artifactId>helloquarkus</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <name>Root</name>
 
     <modules>
+        <module>helloconsul</module>
         <module>hellogatling</module>
+        <module>hellomicronaut</module>
+        <module>helloneo4j</module>
         <module>hellopact</module>
         <module>hellopitestbdd</module>
         <module>hellospringboot2</module>
         <module>hellospringcucumber</module>
         <module>hellospringkafka</module>
-        <module>helloconsul</module>
+        <module>helloquarkus</module>
     </modules>
 </project>

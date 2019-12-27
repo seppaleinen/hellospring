@@ -1,9 +1,9 @@
 package se.david.labs.producer;
 
 class Foo {
-    private String foo;
-    private String bar;
-    private String baz;
+    private final String foo;
+    private final String bar;
+    private final String baz;
 
     Foo(String foo, String bar, String baz) {
         this.foo = foo;

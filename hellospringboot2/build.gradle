@@ -4,11 +4,9 @@ version = '0.0.1-SNAPSHOT'
 buildscript {
     repositories {
         mavenCentral()
-        maven { url "https://repo.spring.io/snapshot" }
-        maven { url "https://repo.spring.io/milestone" }
     }
     dependencies {
-        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE')
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.1.0.RELEASE')
     }
 }
 
@@ -24,8 +22,6 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    maven { url "https://repo.spring.io/snapshot" }
-    maven { url "https://repo.spring.io/milestone" }
 }
 
 dependencies {
@@ -35,10 +31,10 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-webflux')
     compile('com.h2database:h2')
-    compile('javax.xml.bind:jaxb-api:2.2.11')    // deps removed in jdk11
-    compile('com.sun.xml.bind:jaxb-core:2.2.11') // deps removed in jdk11
-    compile('com.sun.xml.bind:jaxb-impl:2.2.11') // deps removed in jdk11
-    compile('javax.activation:activation:1.1.1') // deps removed in jdk11
+    //compile('javax.xml.bind:jaxb-api:2.2.11')    // deps removed in jdk11
+    //compile('com.sun.xml.bind:jaxb-core:2.2.11') // deps removed in jdk11
+    //compile('com.sun.xml.bind:jaxb-impl:2.2.11') // deps removed in jdk11
+    //compile('javax.activation:activation:1.1.1') // deps removed in jdk11
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
 

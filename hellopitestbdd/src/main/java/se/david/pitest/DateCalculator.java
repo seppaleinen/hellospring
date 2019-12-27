@@ -3,7 +3,7 @@ package se.david.pitest;
 import java.util.Date;
 
 class DateCalculator {
-    private Date now;
+    private final Date now;
 
     DateCalculator(Date now) {
         this.now = now;

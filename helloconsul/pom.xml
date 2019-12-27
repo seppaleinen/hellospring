@@ -7,15 +7,17 @@
         <groupId>se.david</groupId>
         <artifactId>root</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>.</relativePath>
+        <relativePath>..</relativePath>
     </parent>
 
     <artifactId>helloconsul</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <name>Root - Hello Consul</name>
 
     <modules>
-        <module>discovery</module>
-        <module>register</module>
+        <module>consul-discovery</module>
+        <module>consul-register</module>
+        <module>ribbon-discovery</module>
     </modules>
 </project>
