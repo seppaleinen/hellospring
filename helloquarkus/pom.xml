@@ -102,10 +102,22 @@
                   <goal>native-image</goal>
                 </goals>
                 <configuration>
+                  <dockerBuild>true</dockerBuild>
                   <enableHttpUrlHandler>true</enableHttpUrlHandler>
                 </configuration>
               </execution>
             </executions>
+          </plugin>
+          <plugin>
+            <groupId>com.spotify</groupId>
+            <artifactId>dockerfile-maven-plugin</artifactId>
+            <version>1.4.13</version>
+            <goals>
+              <goal>build</goal>
+            </goals>
+            <configuration>
+              <dockerfile>src/main/docker/Dockerfile.native</dockerfile>
+            </configuration>
           </plugin>
           <plugin>
             <artifactId>maven-failsafe-plugin</artifactId>
