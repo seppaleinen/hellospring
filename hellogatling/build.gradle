@@ -43,7 +43,6 @@ dependencies {
     testCompile('io.rest-assured:rest-assured:3.0.5')
     testCompile('junit:junit:4.12')
     testCompile('io.gatling.highcharts:gatling-charts-highcharts:2.3.1')
-    testCompile('org.scalatest:scalatest_2.11:3.0.1')
 }
 
 task startBootAppInBackground(type: com.github.psxpaul.task.JavaExecFork) {
