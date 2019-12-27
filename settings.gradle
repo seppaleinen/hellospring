@@ -1,4 +1,4 @@
-rootProject.name = 'hellospring'
+rootProject.name = 'root'
 
 include 'helloconsul'
 include 'helloconsul:consul-discovery'
