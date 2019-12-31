@@ -1,4 +1,5 @@
 rootProject.name = 'microframeworks'
 
+include 'hellohelidon'
 include 'hellomicronaut'
 include 'helloquarkus'
