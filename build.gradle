@@ -4,8 +4,8 @@ buildscript {
     }
     configurations.maybeCreate("pitest")
     dependencies {
-        classpath "info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.2.4"
-        pitest 'com.github.alexvictoor:pitest-cucumber-plugin:0.4'
+        classpath "info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.4.5"
+        pitest 'com.github.alexvictoor:pitest-cucumber-plugin:0.8'
 
     }
 }

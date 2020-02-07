@@ -1,53 +1,51 @@
 package se.david.pitest;
 
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import static org.junit.Assert.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.junit.Assert.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import cucumber.api.java.Before;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = BootApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(loader = SpringBootContextLoader.class)
 @Ignore
 public class SpringBootdefs {
-    @LocalServerPort
-    private int port;
-    @Autowired
-    private WebApplicationContext context;
-    private MockMvc mvc;
+	@Autowired
+	private WebApplicationContext context;
+	private MockMvc mvc;
 
-    private String response;
+	private String response;
 
-    @Given("^all is well$")
-    public void givenAllIsWell() {
-        mvc = MockMvcBuilders
-                .webAppContextSetup(context)
-                .build();
-    }
+	@Before
+	public void setup() {
+		mvc = MockMvcBuilders
+				.webAppContextSetup(context)
+				.build();
+	}
 
-    @When("^calling rest interface$")
-    public void callRest() throws Exception {
-        response = mvc.perform(get("/message/hello"))
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
-    }
+	@When("^calling (.+)")
+	public void callRest(String url) throws Exception {
+		response = mvc.perform(get(url))
+				.andReturn()
+				.getResponse()
+				.getContentAsString();
+	}
 
-    @Then("^result should be ok$")
-    public void checkResult() {
-        assertEquals("hello", response);
-    }
+	@Then("^result should be (.*)$")
+	public void checkResult(String expectedResponse) {
+		assertEquals(expectedResponse, response);
+	}
 }
