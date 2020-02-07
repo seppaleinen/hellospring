@@ -1,0 +1,66 @@
+apply plugin: 'java'
+
+group = 'se.david.labs'
+version = '1.0-SNAPSHOT'
+
+sourceCompatibility = 8
+targetCompatibility = 8
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+ext {
+    helidonversion = '1.4.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // import Helidon BOM
+    implementation platform("io.helidon:helidon-dependencies:${project.helidonversion}")
+
+    compile('io.helidon.bundles:helidon-bundles-webserver')
+    compile('io.helidon.config:helidon-config-yaml')
+    compile('io.helidon.health:helidon-health')
+    compile('io.helidon.health:helidon-health-checks')
+    compile('io.helidon.metrics:helidon-metrics2')
+
+    testCompileOnly('org.junit.jupiter:junit-jupiter-api')
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine')
+    testImplementation('org.awaitility:awaitility:3.0.0')
+    testImplementation('io.rest-assured:rest-assured:3.0.5')
+}
+
+// define a custom task to copy all dependencies in the runtime classpath
+// into build/libs/libs
+// uses built-in Copy
+task copyLibs(type: Copy) {
+    from configurations.runtimeClasspath
+    into 'build/libs/libs'
+}
+
+// add it as a dependency of built-in task 'assemble'
+copyLibs.dependsOn jar
+assemble.dependsOn copyLibs
+
+// default jar configuration
+// set the main classpath
+// add each jar under build/libs/libs into the classpath
+jar {
+    archiveFileName = "${project.name}.jar"
+    manifest {
+        attributes ('Main-Class': 'se.david.labs.helidon.Main',
+                'Class-Path': configurations.runtimeClasspath.files.collect { "libs/$it.name" }.join(' ')
+        )
+    }
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        showStandardStreams = false
+    }
+}
