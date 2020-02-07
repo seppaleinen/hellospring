@@ -1,20 +1,20 @@
-group = 'se.david'
-version = '0.0.1-SNAPSHOT'
-
 buildscript {
     repositories {
         mavenCentral()
     }
 
-    dependencies {
-        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.1.0.RELEASE')
-    }
 }
 
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
+plugins {
+    id 'com.google.cloud.tools.jib' version '2.0.0'
+    id 'java'
+    id 'maven'
+    id 'org.springframework.boot' version '2.2.4.RELEASE'
+    id "io.spring.dependency-management" version "1.0.9.RELEASE"
+}
+
+group = 'se.david'
+version = '0.0.1-SNAPSHOT'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -25,20 +25,40 @@ repositories {
     mavenCentral()
 }
 
+jib {
+    from {
+        image = 'openjdk:8-jre-alpine'
+    }
+    to {
+        image = 'seppaleinen/hello-neo4j'
+    }
+    container {
+        jvmFlags = ['-Dspring.profiles.active=docker']
+    }
+}
+
+task docker() {
+}
+
+docker.dependsOn jibDockerBuild
+
 dependencies {
     compile('org.springframework.boot:spring-boot-starter')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-data-neo4j')
     compile('org.springframework.boot:spring-boot-starter-data-rest')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.neo4j.driver:neo4j-java-driver-spring-boot-starter:4.0.0.1')
     compile('org.springframework.boot:spring-boot-devtools')
-    compile('org.neo4j:neo4j-ogm-bolt-driver:3.1.4')
+    compile('org.neo4j:neo4j-ogm-bolt-driver:3.2.8')
     runtime('org.neo4j:neo4j:3.5.0')
 
-    testCompile('org.neo4j:neo4j-ogm-embedded-driver:3.1.4')
+    testCompile('org.neo4j:neo4j-ogm-embedded-driver:3.2.8')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('io.rest-assured:rest-assured:3.0.5')
     testCompile('org.awaitility:awaitility:3.0.0')
     testCompile('org.neo4j.test:neo4j-harness:3.5.0')
+    testCompile('org.neo4j.driver:neo4j-java-driver-test-harness-spring-boot-autoconfigure:4.0.0.1')
 }
 
 test {

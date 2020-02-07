@@ -1,6 +1,7 @@
 # hello-neo4j
 
-* mvn clean install
+* mvn clean install -Pdocker || gradle clean build docker
+
 * docker-compose up --build -d
 * [http://localhost:7474](http://localhost:7474)
 * username/password: neo4j/password
@@ -10,5 +11,4 @@
 
 #### TODO
 
-* docker jib
 * auto insert data on start
