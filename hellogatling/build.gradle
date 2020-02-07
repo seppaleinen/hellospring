@@ -38,11 +38,20 @@ repositories {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter')
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.scala-lang:scala-compiler:2.10.3')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('io.rest-assured:rest-assured:3.0.5')
     testCompile('junit:junit:4.12')
     testCompile('io.gatling.highcharts:gatling-charts-highcharts:2.3.1')
+}
+
+configurations {
+    scalaCompiler
+}
+
+tasks.withType(ScalaCompile) {
+    scalaClasspath = configurations.scalaCompiler
 }
 
 task startBootAppInBackground(type: com.github.psxpaul.task.JavaExecFork) {

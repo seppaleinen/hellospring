@@ -1,4 +1,4 @@
-rootProject.name = 'hellospring'
+rootProject.name = 'root'
 
 include 'helloconsul'
 include 'helloconsul:consul-discovery'
@@ -6,8 +6,6 @@ include 'helloconsul:consul-register'
 include 'helloconsul:ribbon-discovery'
 include 'hellodocs'
 include 'hellogatling'
-// Not working now in jdk9+
-//include 'hellomicronaut'
 include 'helloneo4j'
 include 'hellopact'
 include 'hellopact:hellopact-consumer1'
@@ -19,3 +17,7 @@ include 'helloquarkus'
 include 'hellospringboot2'
 include 'hellospringcucumber'
 include 'hellospringkafka'
+include 'microframeworks'
+include 'microframeworks:helloquarkus'
+// Not working now in jdk9+
+//include 'microframeworks:hellomicronaut'

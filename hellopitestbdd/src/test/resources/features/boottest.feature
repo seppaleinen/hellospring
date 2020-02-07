@@ -1,6 +1,5 @@
 Feature: Test spring boot integrations
 
   Scenario: Do the stuff
-    Given all is well
-    When calling rest interface
-    Then result should be ok
+    When calling /message/hello
+    Then result should be hello
