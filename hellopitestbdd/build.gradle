@@ -7,9 +7,9 @@ buildscript {
     }
     configurations.maybeCreate('pitest')
     dependencies {
-        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.1.0.RELEASE')
-        classpath('info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.2.4')
-        pitest('com.github.alexvictoor:pitest-cucumber-plugin:0.4')
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.2.4.RELEASE')
+        classpath('info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.4.5')
+        pitest('com.github.alexvictoor:pitest-cucumber-plugin:0.8')
     }
 }
 
@@ -38,6 +38,7 @@ pitest {
     targetClasses = ['se.david.pitest.*']  //by default "${project.group}.*"
     targetTests = ['se.david.pitest.*']  //by default "${project.group}.*"
     outputFormats = ['XML', 'HTML']
+    testPlugin = 'Cucumber'
 }
 
 dependencies {
@@ -45,11 +46,11 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.boot:spring-boot-test')
-    testCompile('org.pitest:pitest:1.2.0')
+    testCompile('org.pitest:pitest:1.4.5')
     testCompile('junit:junit')
-    testCompile('info.cukes:cucumber-java:1.2.5')
-    testCompile('info.cukes:cucumber-junit:1.2.5')
-    testCompile('info.cukes:cucumber-spring:1.2.5')
+    testCompile('io.cucumber:cucumber-java:4.2.0')
+    testCompile('io.cucumber:cucumber-junit:4.2.0')
+    testCompile('io.cucumber:cucumber-spring:4.2.0')
 }
 
 test {

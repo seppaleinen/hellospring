@@ -10,15 +10,15 @@
         <relativePath>..</relativePath>
     </parent>
 
-    <artifactId>hellopact</artifactId>
+    <groupId>se.david</groupId>
+    <artifactId>microframeworks</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Root - Hellopact</name>
+    <name>Root - Microframeworks</name>
 
     <modules>
-        <module>hellopact-consumer1</module>
-        <module>hellopact-consumer2</module>
-        <module>hellopact-producer</module>
+        <module>hellomicronaut</module>
+        <module>helloquarkus</module>
     </modules>
 </project>
