@@ -1,20 +1,19 @@
-group = 'se.david'
-version = '0.0.1-SNAPSHOT'
-
 buildscript {
     repositories {
         mavenCentral()
     }
-
-    dependencies {
-        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.1.0.RELEASE')
-    }
 }
 
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
+plugins {
+    id 'java'
+    id 'maven'
+    id 'org.springframework.boot' version '2.2.4.RELEASE'
+    id "io.spring.dependency-management" version "1.0.9.RELEASE"
+    id 'com.google.cloud.tools.jib' version '2.0.0'
+}
+
+group = 'se.david'
+version = '0.0.1-SNAPSHOT'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -24,6 +23,23 @@ targetCompatibility = 1.8
 repositories {
     mavenCentral()
 }
+
+jib {
+    from {
+        image = 'openjdk:8-jre-alpine'
+    }
+    to {
+        image = 'seppaleinen/hellospringkafka'
+    }
+    container {
+        jvmFlags = ['-Dspring.profiles.active=docker']
+    }
+}
+
+task docker() {
+}
+
+docker.dependsOn jibDockerBuild
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter')
