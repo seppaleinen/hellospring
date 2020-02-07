@@ -21,7 +21,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<!-- Highest version compatible with pitest-cucumber-plugin-->
-		<pitest.version>1.2.0</pitest.version>
+		<pitest.version>1.4.5</pitest.version>
 	</properties>
 
 	<dependencies>
@@ -35,11 +35,6 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.github.alexvictoor</groupId>
-			<artifactId>pitest-cucumber-plugin</artifactId>
-			<version>0.4</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -52,47 +47,32 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.pitest</groupId>
-			<artifactId>pitest</artifactId>
-			<version>${pitest.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>info.cukes</groupId>
+			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-java</artifactId>
-			<version>1.2.5</version>
+			<version>4.2.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>info.cukes</groupId>
+			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-junit</artifactId>
-			<version>1.2.5</version>
+			<version>4.2.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>info.cukes</groupId>
+			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-spring</artifactId>
-			<version>1.2.5</version>
+			<version>4.2.0</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.pitest</groupId>
-					<artifactId>pitest-maven</artifactId>
-					<version>${pitest.version}</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -125,6 +105,7 @@
 					<plugin>
 						<groupId>org.pitest</groupId>
 						<artifactId>pitest-maven</artifactId>
+						<version>${pitest.version}</version>
 						<configuration>
 							<targetClasses>
 								<param>se.david.*</param>
@@ -136,12 +117,20 @@
 								<outputFormat>XML</outputFormat>
 								<outputFormat>HTML</outputFormat>
 							</outputFormats>
+							<testPlugin>Cucumber</testPlugin>
+							<verbose>true</verbose>
 						</configuration>
 						<dependencies>
 							<dependency>
 								<groupId>com.github.alexvictoor</groupId>
 								<artifactId>pitest-cucumber-plugin</artifactId>
-								<version>0.4</version>
+								<version>0.8</version>
+								<exclusions>
+									<exclusion>
+										<groupId>org.pitest</groupId>
+										<artifactId>pitest-maven</artifactId>
+									</exclusion>
+								</exclusions>
 							</dependency>
 						</dependencies>
 						<executions>
