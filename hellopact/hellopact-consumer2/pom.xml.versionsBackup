@@ -10,11 +10,11 @@
         <relativePath>..</relativePath>
     </parent>
 
-    <artifactId>hellopact-consumer1</artifactId>
+    <artifactId>hellopact-consumer2</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Root - Hellopact - hellopact-consumer1</name>
+    <name>Root - Hellopact - hellopact-consumer2</name>
     <description>Testing out pact</description>
 
     <properties>
@@ -62,7 +62,7 @@
         <dependency>
             <groupId>au.com.dius</groupId>
             <artifactId>pact-jvm-consumer-junit_2.12</artifactId>
-            <version>3.6.15</version>
+            <version>3.5.19</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -97,9 +97,9 @@
                             <consumers>
                                 <!-- Again, you can define as many consumers for each provider as you need, but each must have a unique name -->
                                 <consumer>
-                                    <name>hellopact-consumer1</name>
+                                    <name>hellopact-consumer2</name>
                                     <!--  currently supports a file path using pactFile or a URL using pactUrl -->
-                                    <pactFile>${project.build.directory}/pacts/hellopact-consumer1-hellopact-producer.json</pactFile>
+                                    <pactFile>${project.build.directory}/pacts/hellopact-consumer2-hellopact-producer.json</pactFile>
                                 </consumer>
                             </consumers>
                         </serviceProvider>
