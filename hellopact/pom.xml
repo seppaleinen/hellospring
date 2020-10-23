@@ -7,7 +7,6 @@
         <groupId>se.david</groupId>
         <artifactId>root</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>..</relativePath>
     </parent>
 
     <artifactId>hellopact</artifactId>
